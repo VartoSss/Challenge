@@ -236,6 +236,9 @@ _Pvt_Extensions
 .fake/
 
 
+.idea/
+
+
 **/.idea
 **/.vscode
 **/node_modules
