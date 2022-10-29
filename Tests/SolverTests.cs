@@ -40,7 +40,7 @@ public class SolverTests
         [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]
         public static void CypherTest(string task, string expectedResult)
         {
-            Assert.AreEqual(expectedResult, Solver.SolveCypher(task));
+            Assert.AreEqual(Solver.SolveCypher(task), expectedResult);
         }
     }
 }
