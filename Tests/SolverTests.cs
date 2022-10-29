@@ -13,16 +13,22 @@ public class SolverTests
         // Действия, которые будут выполнены перед каждым тестом
     }
 
-    [Test]
-    public void Solve_Returns42_Everytime()
+
+    [TestFixture]
+    public class PolynomialTests
     {
-        var expected = "42";
-        TaskResponse task = null;
-
-        var actual = Solver.Solve(task);
-
-        Assert.AreEqual(expected, actual);
+        [TestCase("7.3999999999999995*x + (-11.1)", "1.5")]
+        [TestCase("10.5*x^2 + (-0.9)*x + 9.2", "no roots")]
+        [TestCase("6.3*x^2 + 5.3999999999999995*x + (-8)", "-1.6341894191592536")]
+        [TestCase("0*x + 1", "no roots")]
+        public void SolvePolynomial(string task, string actual)
+        {
+            Assert.AreEqual(actual, Solver.SolvePolynom(task));
+        }
     }
+
+    
+
 
     [TearDown]
     public void Teardown()
