@@ -25,35 +25,36 @@ public class Solver
 {
     public static string Solve(TaskResponse taskResponse)
     {
+        var question = taskResponse.Question;
         if (taskResponse.TypeId == "starter")
-            return SolveStarter(taskResponse);
+            return SolveStarter(question);
         else if (taskResponse.TypeId == "cypher")
-            return SolveCypher(taskResponse);
+            return SolveCypher(question);
         else if (taskResponse.TypeId == "determinant")
-            return DeterminantSolver(taskResponse);
+            return DeterminantSolver(question);
         else if (taskResponse.TypeId == "moment")
-            return SolveMoment(taskResponse);
+            return SolveMoment(question);
         else if (taskResponse.TypeId == "math")
-            return SolveMath(taskResponse);
+            return SolveMath(question);
         else if (taskResponse.TypeId == "steganography")
-            return SolveSteganography(taskResponse);
+            return SolveSteganography(question);
         else if (taskResponse.TypeId == "polynomial-root")
-            return SolvePolynom(taskResponse);
+            return SolvePolynom(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
 
     //Starter
-    public static string SolveStarter(TaskResponse taskResponse)
+    public static string SolveStarter(string question)
     {
-        var taskFormulation = taskResponse.Question;
+        var taskFormulation = question;
         return "42";
     }
 
     //Cypher
-    public static string SolveCypher(TaskResponse taskResponse)
+    public static string SolveCypher(string question)
     {
-        var task = taskResponse.Question;
+        var task = question;
         var splittedTask = task.Split(new[] { "#" }, StringSplitOptions.RemoveEmptyEntries);
         if (splittedTask[0] == "reversed" && splittedTask.Length == 2)
         {
@@ -67,9 +68,9 @@ public class Solver
     }
 
     //Determinant
-    private static string DeterminantSolver(TaskResponse taskResponse)
+    private static string DeterminantSolver(string question)
     {
-        var s = taskResponse.Question;
+        var s = question;
         var separators = new string[] { "&", @"\\", " " };
         var strings = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
         var matrix = Array.ConvertAll(strings, s => int.Parse(s));
@@ -145,9 +146,9 @@ public class Solver
     }
 
     //Moment
-    public static string SolveMoment(TaskResponse taskResponse)
+    public static string SolveMoment(string question)
     {
-        var task = taskResponse.Question;
+        var task = question;
         var SplitTimeDate = task.Split();
         var time = SplitTimeDate[0].Split(":");
         var hour = time[0];
@@ -161,9 +162,9 @@ public class Solver
     }
 
     //Math
-    public static string SolveMath(TaskResponse taskResponse)
+    public static string SolveMath(string question)
     {
-        var resultFormula = GetValue(taskResponse.Question);
+        var resultFormula = GetValue(question);
         var result = Convert.ToDouble(new DataTable().Compute(resultFormula, ""));
 
         return result.ToString();
@@ -251,9 +252,9 @@ public class Solver
     }
 
     //Steganography
-    public static string SolveSteganography(TaskResponse taskResponse)
+    public static string SolveSteganography(string question)
     {
-        var str = taskResponse.Question;
+        var str = question;
         var buildingStr = new StringBuilder();
         var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
         var num = RomanToArab(lines[0]);
@@ -278,9 +279,9 @@ public class Solver
     }
 
     //polynomial-root
-    public static string SolvePolynom(TaskResponse taskResponse)
+    public static string SolvePolynom(string question)
     {
-        var equation = taskResponse.Question;
+        var equation = question;
         var newEquation = "";
         for (var i = 0; i < equation.Length; i++)
         {
