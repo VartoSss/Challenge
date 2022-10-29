@@ -89,7 +89,7 @@ public class Solver
     }
 
     //this method determines the sign of the elements
-    static int SignOfElement(int i, int j)
+    public static int SignOfElement(int i, int j)
     {
         if ((i + j) % 2 == 0)
             return 1;
@@ -98,7 +98,7 @@ public class Solver
     }
 
     //this method determines the sub matrix corresponding to a given element
-    static double[,] CreateSmallerMatrix(double[,] input, int i, int j)
+    public static double[,] CreateSmallerMatrix(double[,] input, int i, int j)
     {
         int order = int.Parse(System.Math.Sqrt(input.Length).ToString());
         double[,] output = new double[order - 1, order - 1];
@@ -124,7 +124,7 @@ public class Solver
     }
 
     //this method determines the value of determinant using recursion
-    static double Determinant(double[,] input)
+    public static double Determinant(double[,] input)
     {
         int order = int.Parse(System.Math.Sqrt(input.Length).ToString());
         if (order > 2)
