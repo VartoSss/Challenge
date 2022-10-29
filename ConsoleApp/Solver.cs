@@ -31,15 +31,15 @@ public class Solver
         else if (taskResponse.TypeId == "cypher")
             return SolveCypher(question);
         else if (taskResponse.TypeId == "determinant")
-            return DeterminantSolver(question);
+            return Determinant.DeterminantSolver(question);
         else if (taskResponse.TypeId == "moment")
-            return SolveMoment(question);
+            return Moment.SolveMoment(question);
         else if (taskResponse.TypeId == "math")
             return SolveMath(question);
         else if (taskResponse.TypeId == "steganography")
-            return SolveSteganography(question);
+            return Steganography.SolveSteganography(question);
         else if (taskResponse.TypeId == "polynomial-root")
-            return SolvePolynom(question);
+            return PolynomialRoot.SolvePolynom(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
@@ -67,99 +67,6 @@ public class Solver
             throw new Exception("AAAAAA TASK GOT HARDER");
     }
 
-    //Determinant
-    public static string DeterminantSolver(string question)
-    {
-        var s = question;
-        var separators = new string[] { "&", @"\\", " " };
-        var strings = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-        var matrix = Array.ConvertAll(strings, s => int.Parse(s));
-        var n = (int)Math.Sqrt(matrix.Length);
-        if (n > 0)
-        {
-            double[,] myMatrix = new double[n, n];
-            //input the matrix elements
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                    myMatrix[i, j] = matrix[i * n + j];
-            return Determinant(myMatrix).ToString();
-        }
-        else
-            throw new Exception();
-    }
-
-    //this method determines the sign of the elements
-    public static int SignOfElement(int i, int j)
-    {
-        if ((i + j) % 2 == 0)
-            return 1;
-        else
-            return -1;
-    }
-
-    //this method determines the sub matrix corresponding to a given element
-    public static double[,] CreateSmallerMatrix(double[,] input, int i, int j)
-    {
-        int order = int.Parse(System.Math.Sqrt(input.Length).ToString());
-        double[,] output = new double[order - 1, order - 1];
-        int x = 0, y = 0;
-        for (int m = 0; m < order; m++, x++)
-        {
-            if (m != i)
-            {
-                y = 0;
-                for (int n = 0; n < order; n++)
-                {
-                    if (n != j)
-                    {
-                        output[x, y] = input[m, n];
-                        y++;
-                    }
-                }
-            }
-            else
-                x--;
-        }
-        return output;
-    }
-
-    //this method determines the value of determinant using recursion
-    public static double Determinant(double[,] input)
-    {
-        int order = int.Parse(System.Math.Sqrt(input.Length).ToString());
-        if (order > 2)
-        {
-            double value = 0;
-            for (int j = 0; j < order; j++)
-            {
-                double[,] Temp = CreateSmallerMatrix(input, 0, j);
-                value = value + input[0, j] * (SignOfElement(0, j) * Determinant(Temp));
-            }
-            return value;
-        }
-        else if (order == 2)
-            return ((input[0, 0] * input[1, 1]) - (input[1, 0] * input[0, 1]));
-        
-        else
-            return (input[0, 0]);
-        
-    }
-
-    //Moment
-    public static string SolveMoment(string question)
-    {
-        var task = question;
-        var SplitTimeDate = task.Split();
-        var time = SplitTimeDate[0].Split(":");
-        var hour = time[0];
-        var minutes = time[1];
-        var date = SplitTimeDate[1].Split(".");
-        var day = date[0];
-        var month = date[1];
-        var monthsName = new[] { "января", "февараля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" };
-        var result = $"{day} {monthsName[int.Parse(month) - 1]} {hour}:{minutes}";
-        return result;
-    }
 
     //Math
     public static string SolveMath(string question)
@@ -249,75 +156,5 @@ public class Solver
             }
         }
         return number1;
-    }
-
-    //Steganography
-    public static string SolveSteganography(string question)
-    {
-        var str = question;
-        var buildingStr = new StringBuilder();
-        var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-        var num = RomanToArab(lines[0]);
-        for (var i = 1; i < lines.Length; i++)
-            buildingStr.Append(lines[i][num - 1]);
-        
-        return buildingStr.ToString();
-    }
-    private static short RomanToArab(string roman)
-    {
-        short result = 0;
-        var RomToArab = new Dictionary<char, short>
-            {{ 'I', 1 },{ 'V', 5 },{ 'X', 10 },{ 'L', 50 },{ 'C', 100 },{ 'D', 500 },{ 'M', 1000 } };
-        for (short i = 0; i < roman.Length - 1; ++i)
-        {
-            if (RomToArab[roman[i]] < RomToArab[roman[i + 1]]) 
-                result -= RomToArab[roman[i]];
-            else if (RomToArab[roman[i]] >= RomToArab[roman[i + 1]]) 
-                result += RomToArab[roman[i]];
-        }
-        return result += RomToArab[roman[^1]];
-    }
-
-    //polynomial-root
-    public static string SolvePolynom(string question)
-    {
-        var equation = question;
-        var newEquation = "";
-        for (var i = 0; i < equation.Length; i++)
-        {
-            if (equation[i] == '^')
-                i += 1;
-            else
-                newEquation += equation[i];
-        }
-        newEquation = newEquation.Replace('.', ',');
-        var separators = new string[] { "(", ")", "*", "^", "x", " ", "+" };
-        var multipliers = newEquation.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-        if (multipliers.Length > 3)
-            throw new Exception();
-        else if (multipliers.Length == 3)
-        {
-            var a = double.Parse(multipliers[0]);
-            var b = double.Parse(multipliers[1]);
-            var c = double.Parse(multipliers[2]);
-            double D = Math.Pow(b, 2) - 4 * a * c;
-            if (D > 0 || D == 0)
-                return (((-b - Math.Sqrt(D)) / (2 * a)).ToString()).Replace(',', '.');
-            else
-                return "no roots";
-        }
-        else if (multipliers.Length == 2) // ax + b = 0
-        {
-            var a = double.Parse(multipliers[0]);
-            var b = double.Parse(multipliers[1]);
-            if (((a == 0) && (b == 0)) || (b == 0))
-                return "0";
-            else if (a == 0)
-                return "no roots";
-            else
-                return (-b / a).ToString().Replace(',', '.');
-        }
-        else
-            throw new Exception();
-    }
+    } 
 }
