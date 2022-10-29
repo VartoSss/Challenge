@@ -4,6 +4,7 @@ using Challenge.DataContracts;
 
 namespace Tests;
 
+
 [TestFixture]
 public class StarterTests
 {
