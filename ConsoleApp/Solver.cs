@@ -8,4 +8,5 @@ public class Solver
     {
         return "42";
     }
+    // No Solvers yet
 }
