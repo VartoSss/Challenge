@@ -50,7 +50,7 @@ public class MathTests
     [TestCase("1000-80/10*3%17", "993")]
     public static void MathTest(string task, string expectedResult)
     {
-        Assert.AreEqual(expectedResult, Math.SolveMath(task));
+        Assert.AreEqual(expectedResult, Maths.SolveMath(task));
     }
 }
 

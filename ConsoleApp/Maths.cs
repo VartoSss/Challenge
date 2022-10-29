@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp;
 
-public class Math
+public class Maths
 {
     public static string SolveMath(string question)
     {

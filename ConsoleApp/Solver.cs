@@ -35,7 +35,7 @@ public class Solver
         else if (taskResponse.TypeId == "moment")
             return Moment.SolveMoment(question);
         else if (taskResponse.TypeId == "math")
-            return Math.SolveMath(question);
+            return Maths.SolveMath(question);
         else if (taskResponse.TypeId == "steganography")
             return Steganography.SolveSteganography(question);
         else if (taskResponse.TypeId == "polynomial-root")
