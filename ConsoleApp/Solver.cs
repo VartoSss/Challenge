@@ -68,7 +68,7 @@ public class Solver
     }
 
     //Determinant
-    private static string DeterminantSolver(string question)
+    public static string DeterminantSolver(string question)
     {
         var s = question;
         var separators = new string[] { "&", @"\\", " " };
@@ -81,7 +81,7 @@ public class Solver
             //input the matrix elements
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
-                    myMatrix[i, j] = matrix[i * 3 + j];
+                    myMatrix[i, j] = matrix[i * n + j];
             return Determinant(myMatrix).ToString();
         }
         else
