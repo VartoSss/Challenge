@@ -10,7 +10,7 @@ using Task = System.Threading.Tasks.Task;
 // Скачать можно тут: https://dotnet.microsoft.com/download/dotnet
 
 
-const string teamSecret = ""; // Вставь сюда ключ команды
+const string teamSecret = "rgTEuil2k8O2Z8bAAsM4VRugd9RZ3RC/";
 if (string.IsNullOrEmpty(teamSecret))
 {
     Console.WriteLine("Задай секрет своей команды, чтобы можно было делать запросы от ее имени");
@@ -30,7 +30,7 @@ else
     Console.WriteLine("----------------");
     Console.WriteLine();
 
-    const string taskType = "starter";
+    const string taskType = "math";
 
     var utcNow = DateTime.UtcNow;
     string currentRound = null;
@@ -55,6 +55,7 @@ else
     Console.WriteLine("----------------");
     Console.WriteLine();
 
+    
     Console.WriteLine($"Нажми ВВОД, чтобы получить задачу типа {taskType} в раунде {currentRound}");
     Console.ReadLine();
     Console.WriteLine("Ожидание...");
