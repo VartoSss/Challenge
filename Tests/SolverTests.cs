@@ -11,7 +11,7 @@ public class StarterTests
     [TestCase("suiiiiii", "42")]
     public static void StarterTest(string task, string expectedResult)
     {
-        Assert.AreEqual("42", Solver.SolveStarter(task));
+        Assert.AreEqual("42", Starter.SolveStarter(task));
     }
 }
 [TestFixture]
@@ -50,7 +50,7 @@ public class MathTests
     [TestCase("1000-80/10*3%17", "993")]
     public static void MathTest(string task, string expectedResult)
     {
-        Assert.AreEqual(expectedResult, Solver.SolveMath(task));
+        Assert.AreEqual(expectedResult, Math.SolveMath(task));
     }
 }
 
@@ -63,7 +63,7 @@ public class CypherTests
     [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]
     public static void CypherTest(string task, string expectedResult)
     {
-        Assert.AreEqual(Solver.SolveCypher(task), expectedResult);
+        Assert.AreEqual(Cypher.SolveCypher(task), expectedResult);
     }
 }
 
