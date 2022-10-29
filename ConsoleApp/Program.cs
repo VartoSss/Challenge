@@ -30,7 +30,7 @@ else
     Console.WriteLine("----------------");
     Console.WriteLine();
 
-    const string taskType = "steganography";
+    const string taskType = "polynomial-root";
 
     var utcNow = DateTime.UtcNow;
     string currentRound = null;
@@ -45,7 +45,7 @@ else
     Console.ReadLine();
     Console.WriteLine("Ожидание...");
     var firstTasks = await challengeClient.GetTasksAsync(currentRound, taskType, TaskStatus.Pending, 0, 50);
-    for (int i = 0; i < firstTasks.Count; i++)
+    for(var i = 0; i < firstTasks.Count; i++)
     {
         var task = firstTasks[i];
         Console.WriteLine($"  Задание {i + 1}, статус {task.Status}");
