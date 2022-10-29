@@ -17,4 +17,17 @@ public class MomentTests
         Assert.AreEqual(expectedResult, Solver.SolveMoment(task));
     }
 
+
+    [TestFixture]
+    public class CypherTests
+    {
+        [TestCase("#reversed#enigne eht dekcik dna#", "and kicked the engine")]
+        [TestCase("#reversed#yag ma i#", "i am gay")]
+        [TestCase("#reversed#kcid s'elddir mot#", "tom riddle's dick")]
+        [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]
+        public static void CypherTest(string task, string expectedResult)
+        {
+            Assert.AreEqual(Solver.SolveCypher(task), expectedResult);
+        }
+    }
 }
