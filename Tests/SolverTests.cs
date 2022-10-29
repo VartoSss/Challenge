@@ -5,6 +5,15 @@ using Challenge.DataContracts;
 namespace Tests;
 
 [TestFixture]
+public class StarterTests
+{
+    [TestCase("suiiiiii", "42")]
+    public static void StarterTest(string task, string expectedResult)
+    {
+        Assert.AreEqual("42", Solver.SolveStarter(task));
+    }
+}
+[TestFixture]
 public class MomentTests
 {
     [TestCase("17:08:10 28.10.2022", "28 октября 17:08")]
