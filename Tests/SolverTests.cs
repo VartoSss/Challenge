@@ -23,7 +23,7 @@ public class MomentTests
     [TestCase("15:35:50 28.10.2022", "28 октября 15:35")]
     public void MomentTest(string task, string expectedResult)
     {
-        Assert.AreEqual(expectedResult, Solver.SolveMoment(task));
+        Assert.AreEqual(expectedResult, Moment.SolveMoment(task));
     }
 }
 
@@ -36,7 +36,7 @@ public class PolynomialTests
     [TestCase("0*x + 1", "no roots")]
     public void SolvePolynomial(string task, string actual)
     {
-        Assert.AreEqual(actual, Solver.SolvePolynom(task));
+        Assert.AreEqual(actual, PolynomialRoot.SolvePolynom(task));
     }
 }
 
@@ -75,7 +75,7 @@ public class DeterminantTests
     //[TestCase(@"1 & 0 & 2 & -1 \\ 0 & 0 & 1 & 4 \\ -3 & 0 & 0 & 2 \\ 6 & -3 & -1 & 0", "78")]
     public void SolveDeterminant(string task, string actual)
     {
-        Assert.AreEqual(actual, Solver.DeterminantSolver(task)); 
+        Assert.AreEqual(actual, Determinant.DeterminantSolver(task)); 
     }
 }
 
@@ -88,6 +88,6 @@ public class SteganographyTests
     [TestCase("XIV\r\nprivet no ti prohodish mimo\r\nya spryatala ulibku\r\nmne vazhno chtobi ti uznal\r\nsecret lovimii kazhdiy ritm\r\nti mne ne beznazlichen", "putin")]
     public static void SteganographyTest(string task, string expectedResult)
     {
-        Assert.AreEqual(expectedResult, Solver.SolveSteganography(task));
+        Assert.AreEqual(expectedResult, Steganography.SolveSteganography(task));
     }
 }
