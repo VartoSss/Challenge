@@ -6,28 +6,5 @@ namespace Tests;
 
 public class SolverTests
 {
-    [SetUp]
-    public void Setup()
-    {
-        // Подготовка тестового окружения
-        // Действия, которые будут выполнены перед каждым тестом
-    }
-
-    [Test]
-    public void Solve_Returns42_Everytime()
-    {
-        var expected = "42";
-        TaskResponse task = null;
-
-        var actual = Solver.Solve(task);
-
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TearDown]
-    public void Teardown()
-    {
-        // Разборка тестового окружения
-        // Действия, которые будут выполнены после каждого теста
-    }
+    //Here all tests is going to appear
 }
