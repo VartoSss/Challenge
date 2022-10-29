@@ -8,43 +8,39 @@ using System.Text;
 
 namespace ConsoleApp;
 
+/*
+ * This Solution was created by:
+ * @o_0bebrik
+ *   gh: @balbesi4
+ * @Ghost_flick 
+ *   gh: @ghost-flick
+ * @snkrtree 
+ *   gh: @localhoster23
+ * @VartoSss 
+ *   gh: @VartoSss
+*/
+
+
 public class Solver
 {
     public static string Solve(TaskResponse taskResponse)
     {
         if (taskResponse.TypeId == "starter")
-        {
             return SolveStarter(taskResponse);
-        }
         else if (taskResponse.TypeId == "cypher")
-        {
             return SolveCypher(taskResponse);
-        }
         else if (taskResponse.TypeId == "determinant")
-        {
             return DeterminantSolver(taskResponse);
-        }
         else if (taskResponse.TypeId == "moment")
-        {
             return SolveMoment(taskResponse);
-        }
         else if (taskResponse.TypeId == "math")
-        {
             return SolveMath(taskResponse);
-        }
         else if (taskResponse.TypeId == "steganography")
-        {
             return SolveSteganography(taskResponse);
-        }
         else if (taskResponse.TypeId == "polynomial-root")
-        {
             return SolvePolynom(taskResponse);
-        }
         else
-        {
-            Environment.Exit(0);
-            return "0";
-        }
+            throw new Exception("I don't know how to solve this task type yet");
     }
 
     //Starter
@@ -67,9 +63,7 @@ public class Solver
             return result.ToString();
         }
         else
-        {
             throw new Exception("AAAAAA TASK GOT HARDER");
-        }
     }
 
     //Determinant
@@ -85,16 +79,8 @@ public class Solver
             double[,] myMatrix = new double[n, n];
             //input the matrix elements
             for (int i = 0; i < n; i++)
-            {
                 for (int j = 0; j < n; j++)
-                {
-                    //Console.WriteLine("Enter element [" + (i + 1) + "]" + "[" + (j + 1) + "]: ");
-                    //myMatrix[i, j] = double.Parse(Console.ReadLine().ToString());
                     myMatrix[i, j] = matrix[i * 3 + j];
-                }
-            }
-
-            //Console.WriteLine("Value of the determinant is: " + Determinant(myMatrix));
             return Determinant(myMatrix).ToString();
         }
         else
@@ -105,13 +91,9 @@ public class Solver
     static int SignOfElement(int i, int j)
     {
         if ((i + j) % 2 == 0)
-        {
             return 1;
-        }
         else
-        {
             return -1;
-        }
     }
 
     //this method determines the sub matrix corresponding to a given element
@@ -135,9 +117,7 @@ public class Solver
                 }
             }
             else
-            {
                 x--;
-            }
         }
         return output;
     }
@@ -154,17 +134,14 @@ public class Solver
                 double[,] Temp = CreateSmallerMatrix(input, 0, j);
                 value = value + input[0, j] * (SignOfElement(0, j) * Determinant(Temp));
             }
-
             return value;
         }
         else if (order == 2)
-        {
             return ((input[0, 0] * input[1, 1]) - (input[1, 0] * input[0, 1]));
-        }
+        
         else
-        {
             return (input[0, 0]);
-        }
+        
     }
 
     //Moment
@@ -248,21 +225,18 @@ public class Solver
                     number2 += field[i];
                     i++;
                 }
-
                 if (currentOperation == "%")
                 {
                     var result = (int.Parse(number1) % int.Parse(number2)).ToString();
                     number1 = result;
                     number2 = "";
                 }
-
                 else if (currentOperation == "*")
                 {
                     var result = (int.Parse(number1) * int.Parse(number2)).ToString();
                     number1 = result;
                     number2 = "";
                 }
-
                 else if (currentOperation == "/")
                 {
                     var result = (int.Parse(number1) / int.Parse(number2)).ToString();
@@ -284,9 +258,8 @@ public class Solver
         var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
         var num = RomanToArab(lines[0]);
         for (var i = 1; i < lines.Length; i++)
-        {
             buildingStr.Append(lines[i][num - 1]);
-        }
+        
         return buildingStr.ToString();
     }
     private static short RomanToArab(string roman)
@@ -296,8 +269,10 @@ public class Solver
             {{ 'I', 1 },{ 'V', 5 },{ 'X', 10 },{ 'L', 50 },{ 'C', 100 },{ 'D', 500 },{ 'M', 1000 } };
         for (short i = 0; i < roman.Length - 1; ++i)
         {
-            if (RomToArab[roman[i]] < RomToArab[roman[i + 1]]) result -= RomToArab[roman[i]];
-            else if (RomToArab[roman[i]] >= RomToArab[roman[i + 1]]) result += RomToArab[roman[i]];
+            if (RomToArab[roman[i]] < RomToArab[roman[i + 1]]) 
+                result -= RomToArab[roman[i]];
+            else if (RomToArab[roman[i]] >= RomToArab[roman[i + 1]]) 
+                result += RomToArab[roman[i]];
         }
         return result += RomToArab[roman[^1]];
     }
@@ -326,13 +301,9 @@ public class Solver
             var c = double.Parse(multipliers[2]);
             double D = Math.Pow(b, 2) - 4 * a * c;
             if (D > 0 || D == 0)
-            {
                 return (((-b - Math.Sqrt(D)) / (2 * a)).ToString()).Replace(',', '.');
-            }
             else
-            {
                 return "no roots";
-            }
         }
         else if (multipliers.Length == 2) // ax + b = 0
         {
