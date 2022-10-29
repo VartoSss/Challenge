@@ -30,7 +30,7 @@ else
     Console.WriteLine("----------------");
     Console.WriteLine();
 
-    const string taskType = "math";
+    const string taskType = "steganography";
 
     var utcNow = DateTime.UtcNow;
     string currentRound = null;
@@ -78,8 +78,9 @@ else
     
     Console.WriteLine("----------------");
     Console.WriteLine();
-    for (var i = 0; i < 20; i++)
+    for (var i = 0; i < 47; i++)
     {
+
         Console.WriteLine($"Нажми ВВОД, чтобы получить задачу типа {taskType} в раунде {currentRound}");
         Console.ReadLine();
         Console.WriteLine("Ожидание...");
@@ -90,26 +91,26 @@ else
         Console.WriteLine();
         Console.WriteLine("----------------");
         Console.WriteLine();
+
         var answer = Solver.Solve(newTask);
 
-        Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
-        Console.ReadLine();
-        Console.WriteLine("Ожидание...");
-        var updatedTask = await challengeClient.CheckTaskAnswerAsync(newTask.Id, answer);
-        Console.WriteLine($"  Новое задание, статус {updatedTask.Status}");
-        Console.WriteLine($"  Формулировка:  {updatedTask.UserHint}");
-        Console.WriteLine($"                 {updatedTask.Question}");
-        Console.WriteLine($"  Ответ команды: {updatedTask.TeamAnswer}");
-        Console.WriteLine();
-        if (updatedTask.Status == TaskStatus.Success)
-            Console.WriteLine($"Ура! Ответ угадан!");
-        else if (updatedTask.Status == TaskStatus.Failed)
-            Console.WriteLine($"Похоже ответ не подошел и задачу больше сдать нельзя...");
-        Console.WriteLine();
-        Console.WriteLine("----------------");
-        Console.WriteLine();
+    Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
+    Console.ReadLine();
+    Console.WriteLine("Ожидание...");
+    var updatedTask = await challengeClient.CheckTaskAnswerAsync(newTask.Id, answer);
+    Console.WriteLine($"  Новое задание, статус {updatedTask.Status}");
+    Console.WriteLine($"  Формулировка:  {updatedTask.UserHint}");
+    Console.WriteLine($"                 {updatedTask.Question}");
+    Console.WriteLine($"  Ответ команды: {updatedTask.TeamAnswer}");
+    Console.WriteLine();
+    if (updatedTask.Status == TaskStatus.Success)
+        Console.WriteLine($"Ура! Ответ угадан!");
+    else if (updatedTask.Status == TaskStatus.Failed)
+        Console.WriteLine($"Похоже ответ не подошел и задачу больше сдать нельзя...");
+    Console.WriteLine();
+    Console.WriteLine("----------------");
+    Console.WriteLine();
     }
-
     Console.WriteLine($"Нажми ВВОД, чтобы завершить работу программы");
     Console.ReadLine();
 }
