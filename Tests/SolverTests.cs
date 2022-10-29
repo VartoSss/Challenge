@@ -16,21 +16,8 @@ public class MomentTests
     {
         Assert.AreEqual(expectedResult, Solver.SolveMoment(task));
     }
-
-
-    [TestFixture]
-    public class CypherTests
-    {
-        [TestCase("#reversed#enigne eht dekcik dna#", "and kicked the engine")]
-        [TestCase("#reversed#yag ma i#", "i am gay")]
-        [TestCase("#reversed#kcid s'elddir mot#", "tom riddle's dick")]
-        [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]
-        public static void CypherTest(string task, string expectedResult)
-        {
-            Assert.AreEqual(Solver.SolveCypher(task), expectedResult);
-        }
-    }
 }
+
 
 [TestFixture]
 public class MathTests
@@ -42,5 +29,31 @@ public class MathTests
     public static void MathTest(string task, string expectedResult)
     {
         Assert.AreEqual(expectedResult, Solver.SolveMath(task));
+    }
+}
+
+[TestFixture]
+public class CypherTests
+{
+    [TestCase("#reversed#enigne eht dekcik dna#", "and kicked the engine")]
+    [TestCase("#reversed#yag ma i#", "i am gay")]
+    [TestCase("#reversed#kcid s'elddir mot#", "tom riddle's dick")]
+    [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]
+    public static void CypherTest(string task, string expectedResult)
+    {
+        Assert.AreEqual(Solver.SolveCypher(task), expectedResult);
+    }
+}
+
+[TestFixture]
+public class PolynomialTests
+{
+    [TestCase("7.3999999999999995*x + (-11.1)", "1.5")]
+    [TestCase("10.5*x^2 + (-0.9)*x + 9.2", "no roots")]
+    [TestCase("6.3*x^2 + 5.3999999999999995*x + (-8)", "-1.6341894191592536")]
+    [TestCase("0*x + 1", "no roots")]
+    public void SolvePolynomial(string task, string actual)
+    {
+        Assert.AreEqual(actual, Solver.SolvePolynom(task));
     }
 }
