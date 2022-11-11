@@ -32,13 +32,15 @@ public class Cypher
 
         //поменяй тут пж чтобы принимало с сайта
         var str = splittedTask[1];
-        var shift = int.Parse(splittedTask[0].Substring(13));
+        var shift = int.Parse(splittedTask[0].Substring(14));
 
         var result = new StringBuilder();
 
         for (var i = 0; i < str.Length; i++)
         {
             var index = (Array.IndexOf(chars, str[i]) - shift) % chars.Length;
+            if (index < 0)
+                index = chars.Length + index;
             var newSymbol = chars[index];
             result.Append(newSymbol.ToString());
         }

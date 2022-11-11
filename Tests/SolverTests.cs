@@ -61,6 +61,9 @@ public class CypherTests
     [TestCase("#reversed#yag ma i#", "i am gay")]
     [TestCase("#reversed#kcid s'elddir mot#", "tom riddle's dick")]
     [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]
+    [TestCase("#Caesar's code=-22#3u u7pwu9p43up9xu8upau7up9xupr4408ps439qy3y3wp54au7v'1#", "never get one these were the books containing powerful")]
+    [TestCase("#Caesar's code=-9#j7ej723j28fi2pfl2di2gfkk7i2 2k'fl9'k29ip88 e6fi2d73ek#", "sense as for you mr potter i thought gryffindor meant")]
+    [TestCase("#Caesar's code=1#hpjohaupaljmmazpvaupojhiuarvjssfmmatobqqfeaijtagjohfst#", "")]
     public static void CypherTest(string task, string expectedResult)
     {
         Assert.AreEqual(Cypher.SolveCypher(task), expectedResult);
