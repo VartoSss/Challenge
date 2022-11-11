@@ -11,12 +11,38 @@ namespace ConsoleApp
         public static string SolveSteganography(string question)
         {
             var str = question;
-            var buildingStr = new StringBuilder();
             var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            char[] nums = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+            var firstline = lines[0];
+            //проверка первой строки на римскую
+            var checkifroman = true;
+            foreach (var let in firstline)
+            {
+                if (nums.Contains(let))
+                    checkifroman = false;
+            }
+            if (checkifroman)
+                return SolveRomanSteganography(lines);
+            else
+                return SolveNewSteganography(lines);
+        }
+        public static string SolveRomanSteganography(string[] lines)
+        {
+            var buildingStr = new StringBuilder();
             var num = RomanToArab(lines[0]);
             for (var i = 1; i < lines.Length; i++)
                 buildingStr.Append(lines[i][num - 1]);
-
+            return buildingStr.ToString();
+        }
+        public static string SolveNewSteganography(string[] lines)
+        {
+            var buildingStr = new StringBuilder();
+            var nums = lines[0].Split(' ');
+            for (var i = 0; i < nums.Length; i++)
+            {
+                var num = int.Parse(nums[i]) - 1;
+                buildingStr.Append(lines[1][num]);
+            }
             return buildingStr.ToString();
         }
         private static short RomanToArab(string roman)
