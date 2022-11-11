@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,30 @@ public class Maths
 
         return result.ToString();
     }
+    public static string SolveWithBrackets(string formula)
+    {
+        while (formula.LastIndexOf('(') >= 0)
+        {
+            var lastbracket = formula.LastIndexOf('(');
+            var defaultExpression = new StringBuilder();
+            var solvedBrackets = "";
+
+            for (var i = lastbracket + 1; i < formula.Length; i++)
+            {
+                if (formula[i] != ')')
+                    defaultExpression.Append(formula[i]);
+                else
+                {
+                    solvedBrackets = SolveMath(defaultExpression.ToString());
+                    break;
+                }
+            }
+
+            formula = formula.Substring(0, lastbracket) + solvedBrackets + formula.Substring(defaultExpression.Length + lastbracket + 2);
+        }
+        return SolveMath(formula);
+    }
+
     public static string GetValue(string formula)
     {
         var signs = new List<string>(); // + и -
