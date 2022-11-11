@@ -3,6 +3,7 @@ using Challenge;
 using Challenge.DataContracts;
 using ConsoleApp;
 using Task = System.Threading.Tasks.Task;
+using System.Threading;
 
 
 // Данное приложение можно запускать под Windows, Linux, Mac.
@@ -165,5 +166,6 @@ static async Task AnswerNTasksWithoutHandCheck(ChallengeClient challengeClient, 
         Console.WriteLine();
         Console.WriteLine("----------------");
         Console.WriteLine();
+        Thread.Sleep(200);
     }
 }

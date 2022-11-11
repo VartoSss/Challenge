@@ -13,15 +13,15 @@ namespace ConsoleApp
             var str = question;
             var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             char[] nums = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-            var firstline = lines[0];
+            var firstLine = lines[0];
             //проверка первой строки на римскую
-            var checkifroman = true;
-            foreach (var let in firstline)
+            var checkIfRoman = true;
+            foreach (var let in firstLine)
             {
                 if (nums.Contains(let))
-                    checkifroman = false;
+                    checkIfRoman = false;
             }
-            if (checkifroman)
+            if (checkIfRoman)
                 return SolveRomanSteganography(lines);
             else
                 return SolveNewSteganography(lines);
