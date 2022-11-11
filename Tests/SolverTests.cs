@@ -48,9 +48,12 @@ public class MathTests
     [TestCase("18%5*2", "6")]
     [TestCase("23-7*3+11*2", "24")]
     [TestCase("1000-80/10*3%17", "993")]
+    [TestCase("10%8*6*6/4", "18")]
+    [TestCase("2*(2+2)", "8")]
+    [TestCase("((7+5+3*9)-(7%3))/3", "12")]
     public static void MathTest(string task, string expectedResult)
     {
-        Assert.AreEqual(expectedResult, Maths.SolveMath(task));
+        Assert.AreEqual(expectedResult, Maths.SolveWithBrackets(task));
     }
 }
 
@@ -93,6 +96,8 @@ public class SteganographyTests
     [TestCase("IX\r\nand one more test for this peace of\r\ni don't even know what to right\r\noh i'll shape one word\r\ni think siiuuuuu won't be said by anyone because\r\nits messiiiuuuuuuu", "messi")]
     [TestCase("VIII\r\nlol lolly\r\nand again\r\nokay i pull up\r\nuuuuuiis\r\nsiiiiiiiiiuuuuuuuu\r\nwhat is it going to be\r\nahahahahahah\r\nhahahahahaha", "lipsi ha")]
     [TestCase("XIV\r\nprivet no ti prohodish mimo\r\nya spryatala ulibku\r\nmne vazhno chtobi ti uznal\r\nsecret lovimii kazhdiy ritm\r\nti mne ne beznazlichen", "putin")]
+    [TestCase("XXII\r\noverheard parvati patil malfoy had been trying find how could\r\nunbroken earsplitting note ron hermione had been trying find how\r\nfinch fletchley justin hufflepuff said harry had been trying find\r\nnosebleed harry had been trying find how could see you\r\nteaching harry had been trying find how could see you\r\nsmarten yourselves i don't know who was going be able\r\nexciting about it was going be able get past fluffy\r\nring trapdoor it's not going be able get past fluffy\r\nheeled buckled boots his head boy who was going be\r\nwilling let me said harry had been trying find how\r\ncanary yellow circus tent still there was going be able", "i need that")]
+    [TestCase("XV\r\nprune said harry had been trying find how could see\r\nsleeping bag bertie bott's every flavor beans drooble's best he\r\nfabulous jewels very good bye norbert had been trying find\r\nshuddered don't know who was going be able get past\r\nmodern magical herbs fungi by his head boy who was\r\nelastic band no said harry had been trying find how\r\nasleep almost forgotten all right said harry had been trying\r\nboarded cracks around his head boy who was going be\r\npages muttering herself before he was going be able get\r\ncauldrons all right said harry had been trying find how\r\nkitchens dudley's gang had been trying find how could see\r\nexchange mystified looks like this is it was going be\r\n'n my dear professor mcgonagall was going be able get\r\nfletchley justin hufflepuff said harry had been trying find how\r\nscurrying around his head boy who was going be able\r\nserpent covered blood his head boy who was going be\r\nshutting door open door open door open door open door\r\ncomforting harry had been trying find how could see you", "rest of gryffindor")]
     public static void SteganographyTest(string task, string expectedResult)
     {
         Assert.AreEqual(expectedResult, Steganography.SolveSteganography(task));
