@@ -51,9 +51,11 @@ public class MathTests
     [TestCase("10%8*6*6/4", "18")]
     [TestCase("2*(2+2)", "8")]
     [TestCase("((7+5+3*9)-(7%3))/3", "12")]
+    [TestCase("((10-1)*(7%13-14))+((0+14/13)-(9+3)+(3/7))*((6+2+8-3)/9+(8+12))%12", "-66")]
+    [TestCase("((4*8-2)*(11+11+1))*((7/9+1+6)-(12/11-2%6)-(4/5))/10", "552")]
     public static void MathTest(string task, string expectedResult)
     {
-        Assert.AreEqual(expectedResult, Maths.SolveWithBrackets(task));
+        Assert.AreEqual(expectedResult, MathSolver.Solve(task));
     }
 }
 
