@@ -35,6 +35,8 @@ public class PolynomialTests
     [TestCase("10.5*x^2 + (-0.9)*x + 9.2", "no roots")]
     [TestCase("6.3*x^2 + 5.3999999999999995*x + (-8)", "-1.6341894191592536")]
     [TestCase("0*x + 1", "no roots")]
+    [TestCase("(-27.3)*x^3 + 4.3999999999999995*x^2 + 26.900000000000002*x + 2.8000000000000003", "1.121")]
+    [TestCase("20.5*x^5 + (-5.3)*x^4 + 32.300000000000004*x^3 + (-11.5)*x^2 + 5.6*x + 1.1", "-0.14")]
     public void SolvePolynomial(string task, string actual)
     {
         Assert.AreEqual(actual, PolynomialRoot.SolvePolynom(task));
