@@ -107,7 +107,7 @@ namespace ConsoleApp
             }
 
             if (found == 1)
-                return Math.Round(root, 3);
+                return root;
             else
                 throw new Exception("Didn't find the roots");
         }
