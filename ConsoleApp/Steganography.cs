@@ -14,20 +14,33 @@ namespace ConsoleApp
             var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             var firstline = lines[0];
             var splittedFirstLine = firstline.Split(' ');
-            if (splittedFirstLine.Length == 1 && CheckIfRoman(splittedFirstLine))
+            if (splittedFirstLine.Length == 1 && CheckIfRoman(splittedFirstLine) && !CheckIfSpecialSymbols(splittedFirstLine))
             {
                 return SolveRomanSteganography(lines);
             }
-            else if (splittedFirstLine.Length > 1 && CheckIfRoman(splittedFirstLine))
+            else if (splittedFirstLine.Length > 1 && CheckIfRoman(splittedFirstLine) && !CheckIfSpecialSymbols(splittedFirstLine))
             {
                 return SolveRowRomanSteganography(lines);
             }
-            else if (splittedFirstLine.Length > 1 && !CheckIfRoman(splittedFirstLine))
+            else if (splittedFirstLine.Length > 1 && !CheckIfRoman(splittedFirstLine) && !CheckIfSpecialSymbols(splittedFirstLine))
             {
                 return SolveRowSteganography(lines);
             }
+            else if (splittedFirstLine.Length > 1 && CheckIfSpecialSymbols(splittedFirstLine))
+            {
+                return SolveChemSteganography(lines);
+            }
             else
                 throw new Exception("Something new in stegan");
+        }
+        public static bool CheckIfSpecialSymbols(string[] splittedFirstLine)
+        {
+            foreach (var el in splittedFirstLine)
+            {
+                if (el.Contains('[') || el.Contains(']'))
+                    return true;
+            }
+            return false;
         }
         public static bool CheckIfRoman(string[] splittedFirstLine)
         {
@@ -49,6 +62,18 @@ namespace ConsoleApp
             if (!checkifroman)
                 return false;
             return true;
+        }
+        public static string SolveChemSteganography(string[] lines)
+        {
+            var buildingStr = new StringBuilder();
+            var chemElements = new string[] { "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og", "Uue", "Ubn", "Ubu", "Ubb", "Ubt", "Ubq", "Ubp", "Ubh", "Ubs" };
+            var chems = lines[0].Split(new[] { '[', ']', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var el in chems)
+            {
+                var index = Array.IndexOf(chemElements, el);
+                buildingStr.Append(lines[1][index]);
+            }
+            return buildingStr.ToString();
         }
         public static string SolveRowRomanSteganography(string[] lines)
         {
