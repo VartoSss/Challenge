@@ -50,7 +50,10 @@ public class Shape
                 return "circle";
             return "square";
         }
-        else
+        else if ((dictionary[minY].Count < dictionary[medianY].Count && dictionary[medianY].Count < dictionary[maxY].Count) ||
+            (dictionary[minY].Count > dictionary[medianY].Count && dictionary[medianY].Count > dictionary[maxY].Count))
             return "equilateraltriangle";
+        else
+            throw new Exception("Shape got harder");
     }
 }
