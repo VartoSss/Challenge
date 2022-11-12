@@ -23,4 +23,13 @@ public class Romans
         }
         return result += RomToArab[roman[^1]];
     }
+
+    public static bool IsRoman(string number)
+        {
+            var possibleChars = new[] { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
+            foreach (var symbol in number)
+                if (!possibleChars.Contains(symbol))
+                    return false;
+            return true;
+        }
 }
