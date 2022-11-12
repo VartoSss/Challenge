@@ -12,19 +12,53 @@ namespace ConsoleApp
         {
             var str = question;
             var lines = str.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            char[] nums = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-            var firstLine = lines[0];
-            //проверка первой строки на римскую
-            var checkIfRoman = true;
-            foreach (var let in firstLine)
+            var firstline = lines[0];
+            var splittedFirstLine = firstline.Split(' ');
+            if (splittedFirstLine.Length == 1 && CheckIfRoman(splittedFirstLine))
             {
-                if (nums.Contains(let))
-                    checkIfRoman = false;
-            }
-            if (checkIfRoman)
                 return SolveRomanSteganography(lines);
+            }
+            else if (splittedFirstLine.Length > 1 && CheckIfRoman(splittedFirstLine))
+            {
+                return SolveRowRomanSteganography(lines);
+            }
+            else if (splittedFirstLine.Length > 1 && !CheckIfRoman(splittedFirstLine))
+            {
+                return SolveRowSteganography(lines);
+            }
             else
-                return SolveNewSteganography(lines);
+                throw new Exception("Something new in stegan");
+        }
+        public static bool CheckIfRoman(string[] splittedFirstLine)
+        {
+            char[] nums = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+            var checkifroman = true;
+            foreach (var el in splittedFirstLine)
+            {
+                foreach (var num in nums)
+                {
+                    if (el.Contains(num))
+                    {
+                        checkifroman = false;
+                        break;
+                    }
+                }
+                if (!checkifroman)
+                    break;
+            }
+            if (!checkifroman)
+                return false;
+            return true;
+        }
+        public static string SolveRowRomanSteganography(string[] lines)
+        {
+            var buildingStr = new StringBuilder();
+            foreach (var el in lines[0].Split(' '))
+            {
+                var number = RomanToArab(el);
+                buildingStr.Append(lines[1][number - 1]);
+            }
+            return buildingStr.ToString();
         }
         public static string SolveRomanSteganography(string[] lines)
         {
@@ -34,7 +68,7 @@ namespace ConsoleApp
                 buildingStr.Append(lines[i][num - 1]);
             return buildingStr.ToString();
         }
-        public static string SolveNewSteganography(string[] lines)
+        public static string SolveRowSteganography(string[] lines)
         {
             var buildingStr = new StringBuilder();
             var nums = lines[0].Split(' ');
