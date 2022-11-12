@@ -115,7 +115,12 @@ static async Task AnswerNTasksWithHandCheck(ChallengeClient challengeClient, str
         Console.WriteLine("----------------");
         Console.WriteLine();
 
+        if ((newTask.TypeId == "shape") || (newTask.TypeId == "steganography") || (newTask.TypeId == "math"))
+        {
+            continue;
+        }
         var answer = Solver.Solve(newTask);
+        
 
         Console.WriteLine($"Нажми ВВОД, чтобы ответить на полученную задачу самым правильным ответом: {answer}");
         Console.ReadLine();
@@ -147,9 +152,11 @@ static async Task AnswerNTasksWithoutHandCheck(ChallengeClient challengeClient, 
         Console.WriteLine();
         Console.WriteLine("----------------");
         Console.WriteLine();
-
+        if ((newTask.TypeId == "shape") || (newTask.TypeId == "steganography") || (newTask.TypeId == "math"))
+        {
+            continue;
+        }
         var answer = Solver.Solve(newTask);
-
         var updatedTask = await challengeClient.CheckTaskAnswerAsync(newTask.Id, answer);
         Console.WriteLine($"  Новое задание, статус {updatedTask.Status}");
         Console.WriteLine($"  Формулировка:  {updatedTask.UserHint}");

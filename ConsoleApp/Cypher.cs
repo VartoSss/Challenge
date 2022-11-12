@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace ConsoleApp;
 
 public class Cypher
 {
+    static char[] chars = new char[]
+    {
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3',
+        '4', '5', '6', '7', '8', '9', '\'', ' '
+    };
     public static string SolveCypher(string question)
     {
         var task = question;
@@ -22,14 +30,6 @@ public class Cypher
         }
         else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 14) == "Caesar's code=")
         {
-            var chars = new char[]
-            {
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-            'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-            'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3',
-            '4', '5', '6', '7', '8', '9', '\'', ' '
-            };
-
             //поменяй тут пж чтобы принимало с сайта
             var str = splittedTask[1];
             var shift = int.Parse(splittedTask[0].Substring(14));
@@ -47,17 +47,22 @@ public class Cypher
             //и тут на return)
             return result.ToString();
         }
+        else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 15) == "Vigenere's code")
+        {
+            //var vigenerSquare = BuildVigenerSquare();
+            var str = splittedTask[1];
+            var keyWord = splittedTask[0].Substring(16);
+            var answer = new StringBuilder();
+            for (var i = 0; i < str.Length; i++)
+            {
+                var step = Array.IndexOf(chars, keyWord[i % keyWord.Length]);
+                answer.Append(chars[(Array.IndexOf(chars, str[i]) - step + chars.Length) % chars.Length]);
+            }
 
+            return answer.ToString();
+        }
         else if (splittedTask[0].Substring(0, 20) == "prime multiplicator=")
         {
-            var chars = new char[]
-            {
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-                'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3',
-                '4', '5', '6', '7', '8', '9', '\'', ' '
-            };
-
             var result = new StringBuilder();
 
             var taskParts = splittedTask[0].Split(": ");
@@ -96,4 +101,21 @@ public class Cypher
         else
             throw new Exception("AAAAAA TASK GOT HARDER");
     }
+
+    /*
+    private static object BuildVigenerSquare()
+    {
+        var vigenerSquare = new char[chars.Length, chars.Length];
+        for (var line = 0; line < chars.Length; line++)
+        {
+            for (var i = 0; i < chars.Length; i++)
+            {
+                for (var j = 0; j < chars.Length; j++)
+                {
+                    vigenerSquare[line, line] = 0;
+                }
+            }
+        }
+    }
+    */
 }
