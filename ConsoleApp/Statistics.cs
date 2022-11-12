@@ -36,9 +36,20 @@ namespace ConsoleApp
                 }
                 return maximum.ToString();
             }
+            else if (data[0] == "sum")
+            {
+                var sumValue = 0;
+                var numbers = data[1].Split(' ');
+                foreach (var el in numbers)
+                {
+                    var num = int.Parse(el);
+                    sumValue += num;
+                }
+                return sumValue.ToString();
+            }
             else
             {
-                throw new Exception("damn aarne goin crazy anymore");
+                throw new Exception("new statistics");
             }
         }
     }
