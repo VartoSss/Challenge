@@ -58,6 +58,7 @@ public class MathTests
     [TestCase("((CXVII*LIV-DCCLXVI-XLV)/DCCCLXXXIV)+((DXXIX+CMXXXIX/CXVIII)-(CCCLI+DCXXXI*CXCI-DCLV))", "-119675")]
     [TestCase("((117*54-776-45)/884)+((529+939/118)-(351+631*191-655))", "-119675")]
     [TestCase("((CMXII+CCCX)*(CXCVII+CMXVI+DCXXVII-DLXXII)/CDXXXVII)*((DCLXXXVIII*CLXXXIII*CCLXXXI+CXCIX)*(CCLXXVIII*DCCCXCI*DCXI)+(DCVIII*DLXV%DLXXVIII)/CCXLV)+((XLIII-CMXLIII/MXVI)+(MCL-DCLIII)+(MCCXXX+DCLXXIII))*((MCXVIII+DCCLXII*CMXVI)/XX*(DCXI+CCXIX))", "17487518343114205954")]
+    [TestCase("((60+0)%6+(16*sum(27)(49)-15))+((max(8)(27)*65/38-4)-(22-20*32-21)-(20+right(28)(30))-(min(18)(62)-28))", "11")]
     public static void MathTest(string task, string expectedResult)
     {
         Assert.AreEqual(expectedResult, MathSolver.Solve(task));
