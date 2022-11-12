@@ -33,7 +33,10 @@ namespace ConsoleApp
             {
                 if (IsOperand(token))
                 {
-                    result.Add(token);
+                    if (Romans.IsRoman(token))
+                        result.Add(Romans.RomanToArab(token).ToString());
+                    else
+                        result.Add(token);
                     isUnary = false;
                 }
                 else if (token == "(")
