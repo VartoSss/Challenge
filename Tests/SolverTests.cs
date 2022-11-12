@@ -57,9 +57,18 @@ public class MathTests
     [TestCase("((4*8-2)*(11+11+1))*((7/9+1+6)-(12/11-2%6)-(4/5))/10", "552")]
     [TestCase("((CXVII*LIV-DCCLXVI-XLV)/DCCCLXXXIV)+((DXXIX+CMXXXIX/CXVIII)-(CCCLI+DCXXXI*CXCI-DCLV))", "-119675")]
     [TestCase("((117*54-776-45)/884)+((529+939/118)-(351+631*191-655))", "-119675")]
+    [TestCase("((CMXII+CCCX)*(CXCVII+CMXVI+DCXXVII-DLXXII)/CDXXXVII)*((DCLXXXVIII*CLXXXIII*CCLXXXI+CXCIX)*(CCLXXVIII*DCCCXCI*DCXI)+(DCVIII*DLXV%DLXXVIII)/CCXLV)+((XLIII-CMXLIII/MXVI)+(MCL-DCLIII)+(MCCXXX+DCLXXIII))*((MCXVIII+DCCLXII*CMXVI)/XX*(DCXI+CCXIX))", "17487518343114205954")]
     public static void MathTest(string task, string expectedResult)
     {
         Assert.AreEqual(expectedResult, MathSolver.Solve(task));
+    }
+}
+public class MathFormulaTests
+{
+    [TestCase("((CMXII+CCCX)*(CXCVII+CMXVI+DCXXVII-DLXXII)/CDXXXVII)*((DCLXXXVIII*CLXXXIII*CCLXXXI+CXCIX)*(CCLXXVIII*DCCCXCI*DCXI)+(DCVIII*DLXV%DLXXVIII)/CCXLV)+((XLIII-CMXLIII/MXVI)+(MCL-DCLIII)+(MCCXXX+DCLXXIII))*((MCXVIII+DCCLXII*CMXVI)/XX*(DCXI+CCXIX))", "912 310 + 197 916 + 627 + 572 - * 437 / 688 183 * 281 * 199")]
+    public static void MathFormulaTest(string task, string expectedResult)
+    {
+        Assert.AreEqual(expectedResult, PostfixBuilder.BuildPostfixExpression(task));
     }
 }
 

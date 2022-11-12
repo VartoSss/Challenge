@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Numerics;
+
+
 
 namespace ConsoleApp
 {
     public struct LongComplex
     {
-        public long Real { get; }
-        public long Imaginary { get; }
+        public BigInteger Real { get; }
+        public BigInteger Imaginary { get; }
 
-        public LongComplex(long real, long imaginary)
+        public LongComplex(BigInteger real, BigInteger imaginary)
         {
             Real = real;
             Imaginary = imaginary;
@@ -15,31 +18,31 @@ namespace ConsoleApp
 
         public static LongComplex Add(LongComplex a, LongComplex b)
         {
-            return new LongComplex(a.Real + b.Real, a.Imaginary + b.Imaginary);
+            return new LongComplex((BigInteger)a.Real + (BigInteger)b.Real, (BigInteger)a.Imaginary + (BigInteger)b.Imaginary);
         }
 
         public static LongComplex Subtract(LongComplex a, LongComplex b)
         {
-            return new LongComplex(a.Real - b.Real, a.Imaginary - b.Imaginary);
+            return new LongComplex((BigInteger)a.Real - (BigInteger)b.Real, (BigInteger)a.Imaginary - (BigInteger)b.Imaginary);
         }
 
         public static LongComplex Multiply(LongComplex a, LongComplex b)
         {
-            var real = a.Real * b.Real - a.Imaginary * b.Imaginary;
-            var imaginary = a.Real * b.Imaginary + a.Imaginary * b.Real;
-            return new LongComplex(real, imaginary);
+            var real = (BigInteger)a.Real * (BigInteger)b.Real - (BigInteger)a.Imaginary * (BigInteger)b.Imaginary;
+            var imaginary = (BigInteger)a.Real * (BigInteger)b.Imaginary + (BigInteger)a.Imaginary * (BigInteger)b.Real;
+            return new LongComplex((BigInteger)real, (BigInteger)imaginary);
         }
 
         public static LongComplex DivideInteger(LongComplex a, LongComplex b)
         {
-            var real = a.Real / b.Real;
-            return new LongComplex(real, 0);
+            var real = (BigInteger)a.Real / (BigInteger)b.Real;
+            return new LongComplex((BigInteger)real, 0);
         }
 
-        public static LongComplex DivideWithRemind(LongComplex a, LongComplex b) 
+        public static LongComplex DivideWithRemind(LongComplex a, LongComplex b)
         {
-            var real = a.Real % b.Real;
-            return new LongComplex(real, 0);
+            var real = (BigInteger)a.Real % (BigInteger)b.Real;
+            return new LongComplex((BigInteger)real, 0);
         }
 
 
@@ -50,7 +53,7 @@ namespace ConsoleApp
             if (Imaginary == 0)
                 return $"{Real}";
 
-            var imaginaryAbs = Math.Abs(Imaginary);
+            var imaginaryAbs = Math.Abs((decimal)Imaginary);
             var imaginaryString = imaginaryAbs == 1 ? "i" : $"{imaginaryAbs}i";
 
             if (Real == 0)
@@ -68,13 +71,13 @@ namespace ConsoleApp
                 {
                     var parts = strWithoutI.Split("+");
                     return new LongComplex(
-                        long.Parse(parts[0].Trim()),
+                        BigInteger.Parse(parts[0].Trim()),
                         ParseImaginary(parts[1]));
                 }
                 if (strWithoutI.Length > 0 && strWithoutI.IndexOf("-", 1) >= 0)
                 {
                     var parts = strWithoutI.Split("-");
-                    var real = long.Parse(parts[parts.Length - 2].Trim());
+                    var real = BigInteger.Parse(parts[parts.Length - 2].Trim());
                     if (parts.Length == 3)
                         real *= -1;
                     return new LongComplex(real,
@@ -84,19 +87,19 @@ namespace ConsoleApp
             }
             else
             {
-                var real = long.Parse(str);
+                var real = BigInteger.Parse(str);
                 return new LongComplex(real, 0);
             }
         }
 
-        private static long ParseImaginary(string str)
+        private static BigInteger ParseImaginary(string str)
         {
             str = str.Trim();
             if (str == "-")
                 return -1L;
             if (str == string.Empty)
                 return 1L;
-            return long.Parse(str);
+            return BigInteger.Parse(str);
         }
     }
 }
