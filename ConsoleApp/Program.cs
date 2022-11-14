@@ -115,7 +115,7 @@ static async Task AnswerNTasksWithHandCheck(ChallengeClient challengeClient, str
         Console.WriteLine("----------------");
         Console.WriteLine();
 
-        if ((newTask.TypeId == "shape") || (newTask.TypeId == "steganography") || (newTask.TypeId == "math"))
+        if ((newTask.TypeId == "shape") || (newTask.TypeId == "math"))
         {
             continue;
         }
@@ -152,7 +152,7 @@ static async Task AnswerNTasksWithoutHandCheck(ChallengeClient challengeClient, 
         Console.WriteLine();
         Console.WriteLine("----------------");
         Console.WriteLine();
-        if ((newTask.TypeId == "shape") || (newTask.TypeId == "steganography") || (newTask.TypeId == "math"))
+        if (newTask.TypeId == "math")
         {
             continue;
         }
