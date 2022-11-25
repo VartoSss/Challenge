@@ -107,7 +107,7 @@ static async Task AnswerNTasksWithHandCheck(ChallengeClient challengeClient, str
         Console.WriteLine($"Нажми ВВОД, чтобы получить задачу типа {taskType} в раунде {currentRound}");
         Console.ReadLine();
         Console.WriteLine("Ожидание...");
-        var newTask = await challengeClient.AskNewTaskAsync(currentRound);
+        var newTask = await challengeClient.AskNewTaskAsync(currentRound, taskType);
         Console.WriteLine($"  Новое задание, статус {newTask.Status}");
         Console.WriteLine($"  Формулировка: {newTask.UserHint}");
         Console.WriteLine($"                {newTask.Question}");
@@ -115,7 +115,7 @@ static async Task AnswerNTasksWithHandCheck(ChallengeClient challengeClient, str
         Console.WriteLine("----------------");
         Console.WriteLine();
 
-        if ((newTask.TypeId == "shape") || (newTask.TypeId == "math"))
+        if ((newTask.TypeId == "math"))
         {
             continue;
         }
@@ -145,7 +145,7 @@ static async Task AnswerNTasksWithoutHandCheck(ChallengeClient challengeClient, 
 {
     for (var i = 0; i < taskAmount; i++)
     {
-        var newTask = await challengeClient.AskNewTaskAsync(currentRound);
+        var newTask = await challengeClient.AskNewTaskAsync(currentRound, taskType);
         Console.WriteLine($"  Новое задание, статус {newTask.Status}");
         Console.WriteLine($"  Формулировка: {newTask.UserHint}");
         Console.WriteLine($"                {newTask.Question}");
