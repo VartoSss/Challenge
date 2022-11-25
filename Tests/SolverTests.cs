@@ -31,18 +31,27 @@ public class MomentTests
 [TestFixture]
 public class PolynomialTests
 {
-    [TestCase("7.3999999999999995*x + (-11.1)", "1.5")]
-    [TestCase("10.5*x^2 + (-0.9)*x + 9.2", "no roots")]
-    [TestCase("6.3*x^2 + 5.3999999999999995*x + (-8)", "-1.6341894191592536")]
-    [TestCase("0*x + 1", "no roots")]
-    [TestCase("(-27.3)*x^3 + 4.3999999999999995*x^2 + 26.900000000000002*x + 2.8000000000000003", "1.121")]
-    [TestCase("20.5*x^5 + (-5.3)*x^4 + 32.300000000000004*x^3 + (-11.5)*x^2 + 5.6*x + 1.1", "-0.14")]
-    public void SolvePolynomial(string task, string actual)
+    [TestCase("7.3999999999999995*x + (-11.1)", false)]
+    [TestCase("10.5*x^2 + (-0.9)*x + 9.2", true)]
+    [TestCase("6.3*x^2 + 5.3999999999999995*x + (-8)", false)]
+    [TestCase("0*x + 1", true)]
+    [TestCase("(-27.3)*x^3 + 4.3999999999999995*x^2 + 26.900000000000002*x + 2.8000000000000003", false)]
+    [TestCase("20.5*x^5 + (-5.3)*x^4 + 32.300000000000004*x^3 + (-11.5)*x^2 + 5.6*x + 1.1", false)]
+    [TestCase("2.7*x^5 + (-77)*x^4 + (-72.69999999999999)*x^3 + 60.9*x^2 + 34.6*x + 14.6", false)]
+    public void SolvePolynomial(string task, bool noRoots)
     {
-        Assert.AreEqual(actual, PolynomialRoot.SolvePolynom(task));
+        var answer = PolynomialRoot.SolvePolynom(task);
+        if ((answer == "no roots") || (noRoots))
+        {
+            Assert.AreEqual(noRoots, (answer == "no roots"));
+            return;
+        }
+        var doubleAnswer = double.Parse(answer.Replace('.', ','));
+        var polynomResult = PolynomialRoot.CalculatePolynom(doubleAnswer, PolynomialRoot.GetDoubleMultipliers(task));
+        Assert.Less(polynomResult, 1e-8);
     }
 }
-
+    
 [TestFixture]
 public class MathTests
 {
@@ -85,7 +94,7 @@ public class CypherTests
     [TestCase("#Caesar's code=-9#j7ej723j28fi2pfl2di2gfkk7i2 2k'fl9'k29ip88 e6fi2d73ek#", "sense as for you mr potter i thought gryffindor meant")]
     [TestCase("#Caesar's code=1#hpjohaupaljmmazpvaupojhiuarvjssfmmatobqqfeaijtagjohfst#", "going to kill you tonight quirrell snapped his fingers")]
     [TestCase("#prime multiplicator=8419 formula: (multiplicator * (charIndex + 1)) % (|ABC| + 1) - 1#dc4rnedc4rnernqeclqe7e c0062rne4nrrevx722n0veq ne07q#", "goyle goyle let out a horrible yell scabbers the rat")]
-    [TestCase("#Vigenere's code=6fa85rlrtike#6sd7i 4qapodmyoj9qmrvsjmheiplq05vsox5fn 4r3q11jhci#", "")]
+    [TestCase("#Vigenere's code=6fa85rlrtike#6sd7i 4qapodmyoj9qmrvsjmheiplq05vsox5fn 4r3q11jhci#", "and put the stone back in its pocket and as it did")]
     public static void CypherTest(string task, string expectedResult)
     {
         Assert.AreEqual(Cypher.SolveCypher(task), expectedResult);

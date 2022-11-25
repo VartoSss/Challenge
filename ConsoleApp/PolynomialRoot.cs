@@ -11,35 +11,25 @@ namespace ConsoleApp
     {
         public static string SolvePolynom(string question)
         {
-            var equation = question;
-            var newEquation = "";
-            for (var i = 0; i < equation.Length; i++)
-            {
-                if (equation[i] == '^')
-                    i += 1;
-                else
-                    newEquation += equation[i];
-            }
-            newEquation = newEquation.Replace('.', ',');
-            var separators = new string[] { "(", ")", "*", "^", "x", " ", "+" };
-            var stringMultipliers = newEquation.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            if (double.Parse(stringMultipliers[stringMultipliers.Length - 1]) == 0)
+            
+            var multipliers = GetDoubleMultipliers(question);
+            if (multipliers[multipliers.Length - 1] == 0)
                 return "0.0";
-            if (stringMultipliers.Length == 3)
+            if (multipliers.Length == 3)
             {
-                var a = double.Parse(stringMultipliers[0]);
-                var b = double.Parse(stringMultipliers[1]);
-                var c = double.Parse(stringMultipliers[2]);
+                var a = multipliers[0];
+                var b = multipliers[1];
+                var c = multipliers[2];
                 double D = Math.Pow(b, 2) - 4 * a * c;
                 if (D > 0 || D == 0)
                     return (((-b - Math.Sqrt(D)) / (2 * a)).ToString()).Replace(',', '.');
                 else
                     return "no roots";
             }
-            else if (stringMultipliers.Length == 2) // ax + b = 0
+            else if (multipliers.Length == 2) // ax + b = 0
             {
-                var a = double.Parse(stringMultipliers[0]);
-                var b = double.Parse(stringMultipliers[1]);
+                var a = multipliers[0];
+                var b = multipliers[1];
                 if (((a == 0) && (b == 0)) || (b == 0))
                     return "0";
                 else if (a == 0)
@@ -47,14 +37,8 @@ namespace ConsoleApp
                 else
                     return (-b / a).ToString().Replace(',', '.');
             }
-            else if (stringMultipliers.Length > 3)
+            else if (multipliers.Length > 3)
             {
-                var multipliers = new double [stringMultipliers.Length];
-                for (var i = 0; i < stringMultipliers.Length; i++)
-                {
-                    multipliers[i] = double.Parse(stringMultipliers[i]);
-                }
-
                 var polynomialRoot = double.MaxValue;
                 polynomialRoot = BinaryFindRoot(multipliers);
                 return polynomialRoot.ToString().Replace(',', '.');
@@ -63,16 +47,34 @@ namespace ConsoleApp
                 throw new Exception("unexpected polynom situation");
         }
 
+        public static double[] GetDoubleMultipliers(string polynom)
+        {
+            var newEquation = new StringBuilder();
+            for (var i = 0; i < polynom.Length; i++)
+            {
+                if (polynom[i] == '^') i++;
+                else if (polynom[i] == '.') newEquation.Append(',');
+                else newEquation.Append(polynom[i]);
+            }
+            var separators = new string[] { "(", ")", "*", "^", "x", " ", "+" };
+            var stringMultipliers = newEquation.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            var multipliers = new double[stringMultipliers.Length];
+            for (var i = 0; i < multipliers.Length; i++)
+                multipliers[i] = double.Parse(stringMultipliers[i]);
+            return multipliers;
+        }
+
         private static double BinaryFindRoot(double[] multipliers)
         {
+            var lolo = CalculatePolynom(29.40753872320056, multipliers);
             var root = 0.0;
             var found = 0;
-            var eps = 1.0e-8;
+            var eps = 1.0e-10;
             for (double a = -100; a < 100; a+=0.5)
             {
                 var b = a + 0.5;
-                var fa = f(a, multipliers);
-                var fb = f(b, multipliers);
+                var fa = CalculatePolynom(a, multipliers);
+                var fb = CalculatePolynom(b, multipliers);
                 if (fa * fb > 0)
                     continue;
                 while (true)
@@ -85,7 +87,7 @@ namespace ConsoleApp
                         break;
                     }
 
-                    var fc = f(c, multipliers);
+                    var fc = CalculatePolynom(c, multipliers);
                     if (Math.Abs(fc) < eps)
                     {
                         root = c;
@@ -112,8 +114,8 @@ namespace ConsoleApp
                 throw new Exception("Didn't find the roots");
         }
 
-
-        public static double f(double x, double[] multipliers)
+        
+        public static double CalculatePolynom(double x, double[] multipliers)
         {
             var result = 0.0;
             var mulCount = multipliers.Length;
