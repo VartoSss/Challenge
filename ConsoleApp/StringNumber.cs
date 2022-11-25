@@ -13,7 +13,7 @@ public class StringNumber
 {
     public static string StringNumberSolver(string task)
     {
-        var answerString = new StringBuilder();
+        BigInteger answer = 0;
 
         var wordsToSplit = new Dictionary<string, BigInteger[]>()
         { 
@@ -32,28 +32,43 @@ public class StringNumber
         }
 
         var numberParts = task.Split(powersOfTen, StringSplitOptions.RemoveEmptyEntries);
-        var number = new List<string>();
-
+        var number = new List<BigInteger>();
+        
+        //считаем запарсенные части
         foreach (var part in numberParts)
             number.Add(ConvertNumber(part));
 
-        for (var i = 0; i < powersOfTen.Length; i++)
+        //используемые степени
+        var necessaryPowers = new List<string>();
+        var index = 0;
+        while (index != powersOfTen.Length && wordsToSplit[powersOfTen[index]][0] != 1)
+            index++;
+
+        for (var i = index; i < powersOfTen.Length; i++)
+            necessaryPowers.Add(powersOfTen[i]);
+        
+        //собираем число
+        for (var i = 0; i < necessaryPowers.Count; i++)
         {
-            var power = powersOfTen[i];
-            if (wordsToSplit[power][0] == 1)
-            {
-                var convertedNumber = number.First();
-                number.RemoveAt(0);
-                var calculatedNumber = (BigInteger.Parse(convertedNumber) * wordsToSplit[power][1]).ToString();
-                answerString.Append(calculatedNumber);
-            }
+            var power = necessaryPowers[i];
+            if (wordsToSplit[power][0] == 0)
+                continue;
+                //stringAnswer.Append("000");
             else
-                answerString.Append("000");
+            {
+                var result = wordsToSplit[power][1] * number.First();
+                answer += result;
+                number.RemoveAt(0);
+            }
         }
-        return answerString.ToString();
+
+        if (number.Count > 0)
+            answer += number[0];
+
+        return answer.ToString();
     }
 
-    public static string ConvertNumber(string number)
+    public static BigInteger ConvertNumber(string number)
     {
         var answer = new StringBuilder();
 
@@ -64,29 +79,30 @@ public class StringNumber
         else if (digits.Length == 2)
         {
             var hundreds = ParseDoubleDigitNumber(digits[0]);
-            var result = int.Parse(hundreds) * 100;
+            var result = hundreds * 100;
             answer.Append(result.ToString());
         }
 
         else
         {
             var hundreds = ParseDoubleDigitNumber(digits[0]);
-            var preResult = int.Parse(hundreds) * 100;
-            var numberDD = int.Parse(ParseDoubleDigitNumber(digits[2]));
+            var preResult = hundreds * 100;
+            var numberDD = ParseDoubleDigitNumber(digits[2]);
             var result = (preResult + numberDD).ToString();
             answer.Append(result);
         }
 
-        return answer.ToString();
+        var returnable = BigInteger.Parse(answer.ToString());
+        return returnable;
     }
 
-    public static string ParseDoubleDigitNumber(string numberDD)
+    public static BigInteger ParseDoubleDigitNumber(string numberDD)
     {
-        var answer = new StringBuilder();
+        BigInteger answer = 0;
 
         var values = new Dictionary<string, int>()
         {
-            { "one", 1 }, { "two", 2 }, { "three", 3 },
+            { "zero", 0 }, { "one", 1 }, { "two", 2 }, { "three", 3 },
             { "four", 4 }, { "five", 5 }, { "six", 6 },
             { "seven", 7 }, { "eight", 8 }, { "nine", 9 },
             { "ten", 10 }, { "eleven", 11 }, { "twelve", 12 },
@@ -98,18 +114,18 @@ public class StringNumber
             { "ninety", 90 }
         };
 
-        var digits = numberDD.Split('-', StringSplitOptions.RemoveEmptyEntries);
+        var digits = numberDD.Split(new[] { '-', ' ' }, StringSplitOptions.RemoveEmptyEntries);
         if (digits.Length == 1)
         {
-            var result = values[digits[0]].ToString();
-            answer.Append(result);
+            var result = values[digits[0]];
+            answer += result;
         }
         else
         {
-            var result = (values[digits[0]] + values[digits[1]]).ToString();
-            answer.Append(result);
+            var result = values[digits[0]] + values[digits[1]];
+            answer += result;
         }
 
-        return answer.ToString();
+        return answer;
     }
 }
