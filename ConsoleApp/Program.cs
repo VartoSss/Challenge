@@ -115,7 +115,7 @@ static async Task AnswerNTasksWithHandCheck(ChallengeClient challengeClient, str
         Console.WriteLine("----------------");
         Console.WriteLine();
 
-        if ((newTask.TypeId == "math"))
+        if ((newTask.TypeId == "starter"))
         {
             continue;
         }
@@ -152,7 +152,7 @@ static async Task AnswerNTasksWithoutHandCheck(ChallengeClient challengeClient, 
         Console.WriteLine();
         Console.WriteLine("----------------");
         Console.WriteLine();
-        if (newTask.TypeId == "math")
+        if (newTask.TypeId == "starter")
         {
             continue;
         }
