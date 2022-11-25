@@ -43,7 +43,7 @@ public class Solver
         else if (taskResponse.TypeId == "statistics")
             return Statistics.SolveStatistics(question);
         else if (taskResponse.TypeId == "shape")
-            return Shape.ShapeSolver(question);
+            return NewShape.NewShapeSolver(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
