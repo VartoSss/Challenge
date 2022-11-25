@@ -44,6 +44,8 @@ public class Solver
             return Statistics.SolveStatistics(question);
         else if (taskResponse.TypeId == "shape")
             return NewShape.NewShapeSolver(question);
+        else if (taskResponse.TypeId == "inverse-matrix")
+            return InverseMatrix.CalculateInverseMatrix(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
