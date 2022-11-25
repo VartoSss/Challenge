@@ -162,3 +162,13 @@ public class JSONTest
         Assert.AreEqual(expectedResult, json.SolveCommonJSON(task));
     }
 }
+
+public class StatisticsTest
+{
+    [TestCase("firstmostfrequent|6 4 5 6 0 9 1", "6")]
+    [TestCase("firstmostfrequent|55 4 55 6 55 3 17", "55")]
+    public static void StatisticsTests(string task, string expectedResult)
+    {
+        Assert.AreEqual(expectedResult, Statistics.SolveStatistics(task));
+    }
+}
