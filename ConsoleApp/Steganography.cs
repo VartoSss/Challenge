@@ -18,6 +18,10 @@ namespace ConsoleApp
             {
                 return SolveRomanSteganography(lines);
             }
+            else if (firstline.Contains('(') && firstline.Contains(')'))
+            {
+                return SolveChainSteganography(lines);
+            }
             else if (splittedFirstLine.Length > 1 && CheckIfRoman(splittedFirstLine) && !CheckIfSpecialSymbols(splittedFirstLine))
             {
                 return SolveRowRomanSteganography(lines);
@@ -103,6 +107,46 @@ namespace ConsoleApp
                 buildingStr.Append(lines[1][num]);
             }
             return buildingStr.ToString();
+        }
+        public static string SolveChainSteganography(string[] lines)
+        {
+            var firstline = lines[0].Split(new[] { '(', ')',' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var allcombs = new List<int[]>();
+            var rightnums = new List<int>();
+            var allnums = new List<int>();
+            foreach (var el in firstline)
+            {
+                var mas = el.Split(',');
+                var k1 = int.Parse(mas[0]);
+                var k2 = int.Parse(mas[1]);
+                allcombs.Add(new int[] { k2, k1 });
+                if (k2 == 0)
+                {
+                    rightnums.Add(k2);
+                    rightnums.Add(k1);
+                }
+                if (k1 == 0)
+                    throw new Exception("new zero variant");
+                if (!allnums.Contains(k1))
+                    allnums.Add(k1);
+                if (!allnums.Contains(k2))
+                    allnums.Add(k2);
+            }
+            allnums.Sort();
+            var k = 1;
+            for (var i = 0; i < allnums.Count - 2; i++)
+            {
+                foreach (var list in allcombs)
+                {
+                    if (list[0] == rightnums[k] && !rightnums.Contains(list[1]))
+                        rightnums.Add(list[1]);
+                }
+                k++;
+            }
+            var buidingStr = new StringBuilder();
+            for (var i = 1; i < rightnums.Count; i++)
+                buidingStr.Append(lines[1][rightnums[i] - 1]);
+            return buidingStr.ToString();
         }
         private static short RomanToArab(string roman)
         {
