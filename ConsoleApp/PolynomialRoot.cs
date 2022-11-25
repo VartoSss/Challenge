@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace ConsoleApp
 {
@@ -39,8 +40,11 @@ namespace ConsoleApp
             }
             else if (multipliers.Length > 3)
             {
-                var polynomialRoot = double.MaxValue;
-                polynomialRoot = BinaryFindRoot(multipliers);
+                var polynomialRoot = BinaryFindRoot(multipliers);
+                if (double.IsNaN(polynomialRoot))
+                {
+                    return "no roots";
+                }
                 return polynomialRoot.ToString().Replace(',', '.');
             }
             else
@@ -70,7 +74,7 @@ namespace ConsoleApp
             var root = 0.0;
             var found = 0;
             var eps = 1.0e-10;
-            for (double a = -100; a < 100; a+=0.5)
+            for (double a = -10000; a < 10000; a+=0.5)
             {
                 var b = a + 0.5;
                 var fa = CalculatePolynom(a, multipliers);
@@ -111,7 +115,7 @@ namespace ConsoleApp
             if (found == 1)
                 return root;
             else
-                throw new Exception("Didn't find the roots");
+                return double.NaN; //throw new Exception("didn't find the roots"); // double.NaN; //
         }
 
         

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace ConsoleApp
 {
@@ -13,11 +14,11 @@ namespace ConsoleApp
             var s = question;
             var separators = new string[] { "&", @"\\", " " };
             var strings = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            var matrix = Array.ConvertAll(strings, s => int.Parse(s));
+            var matrix = Array.ConvertAll(strings, s => BigInteger.Parse(s));
             var n = (int)Math.Sqrt(matrix.Length);
             if (n > 0)
             {
-                double[,] myMatrix = new double[n, n];
+                BigInteger[,] myMatrix = new BigInteger[n, n];
                 //input the matrix elements
                 for (int i = 0; i < n; i++)
                     for (int j = 0; j < n; j++)
@@ -29,7 +30,7 @@ namespace ConsoleApp
         }
 
         //this method determines the sign of the elements
-        public static int SignOfElement(int i, int j)
+        public static int SignOfElement(BigInteger i, BigInteger j)
         {
             if ((i + j) % 2 == 0)
                 return 1;
@@ -38,10 +39,10 @@ namespace ConsoleApp
         }
 
         //this method determines the sub matrix corresponding to a given element
-        public static double[,] CreateSmallerMatrix(double[,] input, int i, int j)
+        public static BigInteger[,] CreateSmallerMatrix(BigInteger[,] input, int i, int j)
         {
             int order = int.Parse(System.Math.Sqrt(input.Length).ToString());
-            double[,] output = new double[order - 1, order - 1];
+            BigInteger[,] output = new BigInteger[order - 1, order - 1];
             int x = 0, y = 0;
             for (int m = 0; m < order; m++, x++)
             {
@@ -64,15 +65,15 @@ namespace ConsoleApp
         }
 
         //this method determines the value of determinant using recursion
-        public static double CalculateDeterminant(double[,] input)
+        public static BigInteger CalculateDeterminant(BigInteger[,] input)
         {
             int order = int.Parse(System.Math.Sqrt(input.Length).ToString());
             if (order > 2)
             {
-                double value = 0;
+                BigInteger value = 0;
                 for (int j = 0; j < order; j++)
                 {
-                    double[,] Temp = CreateSmallerMatrix(input, 0, j);
+                    BigInteger[,] Temp = CreateSmallerMatrix(input, 0, j);
                     value = value + input[0, j] * (SignOfElement(0, j) * CalculateDeterminant(Temp));
                 }
                 return value;
