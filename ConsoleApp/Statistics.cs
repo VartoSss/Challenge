@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static IronPython.Modules.ArrayModule;
 
 namespace ConsoleApp
 {
@@ -46,6 +47,28 @@ namespace ConsoleApp
                     sumValue += num;
                 }
                 return sumValue.ToString();
+            }
+            else if (data[0] == "firstmostfrequent")
+            {
+                var mostFreq = 0;
+                var mostFreqNum = "";
+                var numbers = data[1].Split(' ');
+                var intNums = new int[numbers.Length];
+                for (var i = 0; i < numbers.Length; i++)
+                {
+                    var num = int.Parse(numbers[i]);
+                    intNums[i] = num;
+                }
+                for (var i = 0; i < intNums.Length; i++)
+                {
+                    var counter = intNums.Count(v => v == intNums[i]);
+                    if (counter > mostFreq)
+                    {
+                        mostFreq = counter;
+                        mostFreqNum = intNums[i].ToString();
+                    }
+                }
+                return mostFreqNum;
             }
             else
             {

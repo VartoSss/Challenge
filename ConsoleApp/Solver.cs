@@ -49,7 +49,7 @@ public class Solver
         else if (taskResponse.TypeId == "inverse-matrix")
             return InverseMatrix.CalculateInverseMatrix(question);
         else if (taskResponse.TypeId == "string-number")
-            return InverseMatrix.CalculateInverseMatrix(question);
+            return StringNumber.StringNumberSolver(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
