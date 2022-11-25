@@ -30,13 +30,22 @@ namespace ConsoleApp
         public static string[] GetFunction(string question, int startIndex)
         {
             var function = new StringBuilder();
+            var openBracketsCounter = 0;
             var closeBracketsCounter = 0;
+            var openClosedBracketsCounter = 0;
             var i = startIndex;
-            while(closeBracketsCounter != 2)
+            while(openClosedBracketsCounter != 2)
             {
                 function.Append(question[i]);
-                if (question[i] == ')')
-                    closeBracketsCounter++;
+                if (!char.IsLetter(question[i]))
+                {
+                    if (question[i] == ')')
+                        closeBracketsCounter++;
+                    else if (question[i] == '(')
+                        openBracketsCounter++;
+                    if (openBracketsCounter == closeBracketsCounter)
+                        openClosedBracketsCounter++;
+                }
                 i++;
             }
             return new[] { function.ToString(), i.ToString() };
@@ -44,11 +53,8 @@ namespace ConsoleApp
 
         public static string CalculateFunction(string function)
         {
-            var brackets = new[] { ')', '(' };
-            var splitted = function.Split(brackets, StringSplitOptions.RemoveEmptyEntries);
-            var functionName = splitted[0];
-            var argument1 = splitted[1];
-            var argument2 = splitted[2];
+            string functionName, argument1, argument2;
+            GetFunctionAndArguments(function, out functionName, out argument1, out argument2);
 
             argument1 = MathSolver.Solve(argument1);
             argument2 = MathSolver.Solve(argument2);
@@ -71,8 +77,46 @@ namespace ConsoleApp
                 res = a * b;
 
             return res.ToString();
+        }
 
+        private static void GetFunctionAndArguments(string function, out string functionName, out string argument1, out string argument2)
+        {
+            var currentIndex = 0;
+            var openBracketsCounter = 0;
+            var closedBracketsCounter = 0;
+            var functionNameSB = new StringBuilder();
+            while (char.IsLetter(function[currentIndex]))
+            {
+                functionNameSB.Append(function[currentIndex]);
+                currentIndex++;
+            }
+            functionName = functionNameSB.ToString();
 
+            currentIndex++;
+            openBracketsCounter++;
+            argument1 = GetArgument(function, ref currentIndex, ref openBracketsCounter, ref closedBracketsCounter);
+
+            currentIndex++;
+            openBracketsCounter++;
+
+            argument2 = GetArgument(function, ref currentIndex, ref openBracketsCounter, ref closedBracketsCounter);
+        }
+
+        private static string GetArgument(string function, ref int currentIndex, ref int openBracketsCounter, ref int closedBracketsCounter)
+        {
+            string argument1;
+            var argument1SB = new StringBuilder();
+            while (openBracketsCounter != closedBracketsCounter)
+            {   argument1SB.Append(function[currentIndex]);
+                if (function[currentIndex] == '(')
+                    openBracketsCounter++;
+                else if (function[currentIndex] == ')')
+                    closedBracketsCounter++;  
+                currentIndex++;
+            }
+            argument1SB.Remove(argument1SB.Length - 1, 1);
+            argument1 = argument1SB.ToString();
+            return argument1;
         }
     }
 }
