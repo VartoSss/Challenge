@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Data;
 using System.Text.RegularExpressions;
+using Japan;
 
 namespace ConsoleApp;
 
@@ -50,6 +51,8 @@ public class Solver
             return InverseMatrix.CalculateInverseMatrix(question);
         else if (taskResponse.TypeId == "string-number")
             return StringNumber.StringNumberSolver(question);
+        else if (taskResponse.TypeId == "japanese")
+            return Japanese.SolveJapanese(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
