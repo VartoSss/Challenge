@@ -12,6 +12,7 @@ namespace Tests;
 public class CypherTests
 {
     [TestCase("#reversed#enigne eht dekcik dna#", "and kicked the engine")]
+    [TestCase("#a first longest word of the message=holiday#gcndhsmmnrdgcnedcogndyosdcl ndnrdldfootdco68tlydh18t#", "the summer then hope you have er a good holiday said")]
     [TestCase("#reversed#yag ma i#", "i am gay")]
     [TestCase("#reversed#kcid s'elddir mot#", "tom riddle's dick")]
     [TestCase("#reversed#uuuis uuuis uuuis  uuuis#", "siuuu  siuuu siuuu siuuu")]

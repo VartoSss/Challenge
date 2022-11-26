@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic.CompilerServices;
+
 
 namespace ConsoleApp;
 
@@ -98,8 +101,88 @@ public class Cypher
             else
                 throw new Exception("new formula in cypher task");
         }
+        else if (splittedTask[0].Substring(0, 35) == "a first longest word of the message")
+        {
+            var alphabet = new char []
+            {
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3',
+                '4', '5', '6', '7', '8', '9', ' ', '\''
+            }; 
+            var word = splittedTask[0].Split('=')[1];
+            var str = splittedTask[1];
+            
+            var directory = Directory.GetCurrentDirectory();
+            var debug = Directory.GetParent(directory).ToString();
+            var bin = Directory.GetParent(debug).ToString();
+            var project = Directory.GetParent(bin);
+            
+            var allText = File.ReadAllText(project + @"HarryPotterText.txt").ToLower();
+            var text = allText.Split();
+            var ok = false;
+            var keyWord = "";
+            for (var i = 0; i < alphabet.Length; i++)
+            {
+                ok = false;
+                var newString = str.Split(alphabet[i]);
+                foreach (var j in newString)
+                {
+                    if (j.Length == word.Length)
+                    {
+                        if (ok == false)
+                            keyWord = j;
+                        ok = true;
+                    }
+                }
+
+                if (ok == true)
+                {
+                    var decodedString = new StringBuilder();
+                    foreach (var q in str)
+                    {
+                        if (keyWord.Contains(q))
+                        {
+                            decodedString.Append(word[keyWord.IndexOf(q)]);
+                        }
+                        else if (q == alphabet[i])
+                            decodedString.Append(' ');
+                        else 
+                            decodedString.Append('?');
+                    }
+
+                    var dString = decodedString.ToString();
+                    for (var h = 0; h < allText.Length - str.Length; h++)
+                    {
+                        if (StringsAreSame(allText.Substring(h, str.Length), dString))
+                        {
+                            return allText.Substring(h, str.Length);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
         else
             throw new Exception("AAAAAA TASK GOT HARDER");
+    }
+
+    private static bool StringsAreSame(string s1, string s2)
+    {
+        if (s1.Length != s2.Length)
+            return false;
+        for (var i = 0; i < s1.Length; i++)
+        {
+            if (s1[i] == s2[i] || s2[i] == '?')
+            {
+                continue;
+            }
+            else
+                return false;
+        }
+
+        return true;
     }
 
     /*
