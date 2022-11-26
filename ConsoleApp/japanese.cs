@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using static IronPython.Modules._ast;
 using System.Diagnostics;
+using System.Data.Common;
 
 namespace Japan
 {
@@ -25,12 +26,63 @@ namespace Japan
             File.WriteAllText(inputPath, string.Empty);
             File.WriteAllText(outputPath, string.Empty);
             var data = question;
-            data = data.Replace("columns:","");
+            data = data.Replace("columns:", "");
             data = data.Replace("rows:", " ");
             var info = data.Split(' ');
-            var str = new StringBuilder();
-            var str2 = new StringBuilder();
-            foreach (var item in info[0])
+
+            var columnsNotParsed = info[0].Substring(0, info[0].Length - 1);
+            var rawsNotParsed = info[1].Substring(0, info[1].Length - 1);
+
+            var columns = GetRawOrColumnForPython(columnsNotParsed);
+            var raws = GetRawOrColumnForPython(rawsNotParsed);
+
+            var str3 = columns.ToString().TrimEnd(',');
+            var str4 = raws.ToString().TrimEnd(',');
+            var result = string.Format("[clues]\r\ncolumns={0}\r\nrows={1}", str3, str4);
+            File.WriteAllText(inputPath, result);
+            var command = $"pynogram -b {inputPath} >> {outputPath}";
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C " + command;
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+            process.Close();
+            var text = new List<string>();
+            using (StreamReader reader = new StreamReader(outputPath, Encoding.Default))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    text.Add(line);
+            }
+            return ParseAnswer(text);
+        }
+
+        private static StringBuilder GetRawOrColumnForPython(string rawOrColumn)
+        {
+            var res = new StringBuilder();
+            var splitted = rawOrColumn.Split(';');
+            foreach(var field in splitted)
+            {
+                if (field == "")
+                    res.Append("0,");
+                else
+                {
+                    foreach (var symbol in field)
+                    {
+                        if (symbol == ',')
+                            res.Append(' ');
+                        else
+                            res.Append(symbol);
+                    }
+                    res.Append(',');
+                }
+            }
+            if (res[^1] == ',')
+                res.Length--;
+            return res;
+            /*foreach (var item in rawOrColumn)
             {
                 if (item == ';')
                     str.Append(',');
@@ -39,36 +91,8 @@ namespace Japan
                 else
                     str.Append(item);
             }
-            foreach (var item in info[1])
-            {
-                if (item == ';')
-                    str2.Append(',');
-                else if (item == ',')
-                    str2.Append(' ');
-                else
-                    str2.Append(item);
-            }
-            var str3 = str.ToString().TrimEnd(',');
-            var str4 = str2.ToString().TrimEnd(',');
-            var result = string.Format("[clues]\r\ncolumns={0}\r\nrows={1}", str3, str4);
-            File.WriteAllText(inputPath, result);
-            var command = $"pynogram -b {inputPath} >> {outputPath}";
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C "+command;
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-            process.Close();
-            var text = new List<string>();
-            using (StreamReader reader = new StreamReader(outputPath,Encoding.Default))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                    text.Add(line);
-            }
-            return ParseAnswer(text);
+            return str;
+            */
         }
 
         public static string ParseAnswer(List<string> answer)
