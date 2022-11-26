@@ -13,7 +13,7 @@ namespace Tests
     public class japaneseTest
     {
         [TestCase("columns:4;1,1;1;1;1,2;rows:4;1;1,1;1,1;2;", ".####;#....;#...#;#...#;##...")]
-        [TestCase("columns:1;2,1;4;2,1;1;rows:1;3;5;1;1,1;", ".####;#....;#...#;#...#;##...")]
+        [TestCase("columns:1;2,1;4;2,1;1;rows:1;3;5;1;1,1;", "..#..;.###.;#####;..#..;.#.#.")]
 
         public static void JapaneseTests(string task, string expectedResult)
         {
