@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Japan
 {
-    public class japanese
+    public class Japanese
     {
         public static string SolveJapanese(string question)
         {

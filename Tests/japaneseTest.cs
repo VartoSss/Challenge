@@ -17,7 +17,7 @@ namespace Tests
 
         public static void JapaneseTests(string task, string expectedResult)
         {
-            Assert.AreEqual(expectedResult, japanese.SolveJapanese(task));
+            Assert.AreEqual(expectedResult, Japanese.SolveJapanese(task));
         }
     }
 }
