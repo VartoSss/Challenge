@@ -41,8 +41,8 @@ namespace Japan
             var result = string.Format("[clues]\r\ncolumns={0}\r\nrows={1}", str3, str4);
             File.WriteAllText(inputPath, result);
             var command = $"pynogram -b {inputPath} >> {outputPath}";
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "cmd.exe";
             startInfo.Arguments = "/C " + command;
             process.StartInfo = startInfo;
@@ -82,17 +82,6 @@ namespace Japan
             if (res[^1] == ',')
                 res.Length--;
             return res;
-            /*foreach (var item in rawOrColumn)
-            {
-                if (item == ';')
-                    str.Append(',');
-                else if (item == ',')
-                    str.Append(' ');
-                else
-                    str.Append(item);
-            }
-            return str;
-            */
         }
 
         public static string ParseAnswer(List<string> answer)
