@@ -18,10 +18,11 @@ public class NewShape
         var directory = Directory.GetCurrentDirectory();
         var debug = Directory.GetParent(directory).ToString();
         var bin = Directory.GetParent(debug).ToString();
-        var project = Directory.GetParent(bin);
+        var project = Directory.GetParent(bin).ToString();
+        var h1_1 = Directory.GetParent(project);
 
-        var path = directory + "\\shapeConverter.txt";
-        var filePath = project + "\\shape.py";
+        var path = h1_1 + @"\ConsoleApp\shapeConverter.txt";
+        var filePath = h1_1 + @"\ConsoleApp\shape.py";
 
         File.WriteAllText(path, string.Empty);
         File.WriteAllText(path, task);

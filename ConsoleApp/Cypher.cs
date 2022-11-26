@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -116,9 +117,11 @@ public class Cypher
             var directory = Directory.GetCurrentDirectory();
             var debug = Directory.GetParent(directory).ToString();
             var bin = Directory.GetParent(debug).ToString();
-            var project = Directory.GetParent(bin);
+            var project = Directory.GetParent(bin).ToString();
+            var h1_1 = Directory.GetParent(project);
             
-            var allText = File.ReadAllText(project + @"HarryPotterText.txt").ToLower();
+            var allText = File.ReadAllText(h1_1 + @"\ConsoleApp\HarryPotterText.txt").ToLower();
+
             var text = allText.Split();
             var ok = false;
             var keyWord = "";
