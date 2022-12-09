@@ -108,7 +108,7 @@ namespace ConsoleApp
             if (found == 1)
             {
                 var res = CalculatePolynom(root, multipliers);
-                if (res > 1e-3)
+                if (Math.Abs(res) > 1e-3)
                     throw new Exception("Not enough precision");
                 return root;
             }
