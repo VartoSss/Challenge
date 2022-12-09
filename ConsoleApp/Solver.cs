@@ -43,7 +43,7 @@ public class Solver
             return PolynomialRoot.SolvePolynom(question);
         else if (taskResponse.TypeId == "statistics")
             return Statistics.SolveStatistics(question);
-        else if (taskResponse.TypeId == "shape")
+        else if (taskResponse.TypeId == "noisy-shape")
             return NewShape.NewShapeSolver(question);
         else if (taskResponse.TypeId == "json")
             return json.SolveCommonJSON(question);

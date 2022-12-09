@@ -21,7 +21,7 @@ public class NewShape
         var project = Directory.GetParent(bin).ToString();
         var h1_1 = Directory.GetParent(project);
 
-        var path = h1_1 + @"\ConsoleApp\shapeConverter.txt";
+        var path = directory + @"\shapeConverter.txt";
         var filePath = h1_1 + @"\ConsoleApp\shape.py";
 
         File.WriteAllText(path, string.Empty);
@@ -39,11 +39,12 @@ public class NewShape
         var variants = firstTaskPart.Split('=')[1].Split(',');
         Console.WriteLine("Possible answers:");
         for (var i = 0; i < variants.Length; i++)
-        {
             Console.WriteLine($"{variants[i]} - {i + 1}");
-        }
         
         var answer = int.Parse(Console.ReadLine());
+        if (answer > variants.Length)
+            throw new Exception("Вводи руками");
+
         return variants[answer - 1];
     }
 }

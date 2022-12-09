@@ -1,5 +1,10 @@
 ﻿import time
 import matplotlib.pyplot as plt
+import os
+
+print(os.listdir(os.getcwd()))
+#time.sleep(5000)
+
 fig = plt.figure()
 ax = fig.add_subplot(111)
 
