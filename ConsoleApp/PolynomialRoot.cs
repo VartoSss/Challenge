@@ -12,7 +12,7 @@ namespace ConsoleApp
     {
         public static string SolvePolynom(string question)
         {
-            
+
             var multipliers = GetDoubleMultipliers(question);
             if (multipliers[multipliers.Length - 1] == 0)
                 return "0.0";
@@ -74,7 +74,7 @@ namespace ConsoleApp
             var root = 0.0;
             var found = 0;
             var eps = 1.0e-12;
-            for (double a = -100000; a < 100000; a+=0.5)
+            for (double a = -10000; a < 10000; a += 0.5)
             {
                 var b = a + 0.5;
                 var fa = CalculatePolynom(a, multipliers);
@@ -83,7 +83,7 @@ namespace ConsoleApp
                     continue;
                 while (true)
                 {
-                    var c = (b - a) * 0.5 + a;
+                    var c = a + (b - a) * 0.5;
                     if (Math.Abs(a - b) < eps)
                     {
                         root = c;
@@ -118,7 +118,7 @@ namespace ConsoleApp
                 return double.NaN; //throw new Exception("didn't find the roots"); // double.NaN; //
         }
 
-        
+
         public static double CalculatePolynom(double x, double[] multipliers)
         {
             var result = 0.0;
