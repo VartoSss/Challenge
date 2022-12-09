@@ -35,7 +35,7 @@ public class Solver
             return Determinant.DeterminantSolver(question);
         else if (taskResponse.TypeId == "moment")
             return Moment.SolveMoment(question);
-        else if (taskResponse.TypeId == "math")
+        else if (taskResponse.TypeId == "random-math")
             return MathSolver.Solve(question);
         else if (taskResponse.TypeId == "steganography")
             return Steganography.SolveSteganography(question);
