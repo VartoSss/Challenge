@@ -21,8 +21,9 @@ public class CypherTests
     [TestCase("#Caesar's code=1#hpjohaupaljmmazpvaupojhiuarvjssfmmatobqqfeaijtagjohfst#", "going to kill you tonight quirrell snapped his fingers")]
     [TestCase("#prime multiplicator=8419 formula: (multiplicator * (charIndex + 1)) % (|ABC| + 1) - 1#dc4rnedc4rnernqeclqe7e c0062rne4nrrevx722n0veq ne07q#", "goyle goyle let out a horrible yell scabbers the rat")]
     [TestCase("#Vigenere's code=6fa85rlrtike#6sd7i 4qapodmyoj9qmrvsjmheiplq05vsox5fn 4r3q11jhci#", "and put the stone back in its pocket and as it did")]
+    [TestCase("#dyslexia#i wdolu'nt be suirprsed#", "i wouldn't be surprised")]
     public static void CypherTest(string task, string expectedResult)
     {
-        Assert.AreEqual(Cypher.SolveCypher(task), expectedResult);
+        Assert.AreEqual(expectedResult, Cypher.SolveCypher(task));
     }
 }
