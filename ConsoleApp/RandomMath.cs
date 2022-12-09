@@ -40,23 +40,26 @@ namespace ConsoleApp
                 var expressionType = splittedExpression[0];
                 var expressionValue = splittedExpression[1];
                 res.Append('\"');
-                string solvedExpresson;
+                string solvedExpression;
                 if (expressionType == "string-number")
-                    solvedExpresson = ConvertStringNumWithOperationsToNum(expressionValue);
+                    solvedExpression = ConvertStringNumWithOperationsToNum(expressionValue);
 
                 else if (expressionType == "math")
-                    solvedExpresson = MathSolver.Solve(expressionValue);
+                    solvedExpression = MathSolver.Solve(expressionValue);
                 else if (expressionType == "determinant")
-                    solvedExpresson = Determinant.DeterminantSolver(expressionValue);
+                    solvedExpression = Determinant.DeterminantSolver(expressionValue);
                 else if (expressionType == "polynomial-root")
-                    solvedExpresson = PolynomialRoot.SolvePolynom(expressionValue);
+                    solvedExpression = PolynomialRoot.SolvePolynom(expressionValue);
+                else if (expressionType == "cypher")
+                    solvedExpression = SolveRandomMath(Cypher.SolveCypher(expression.Substring(7)));
                 else
                     throw new Exception("Shit, bro");
 
-                res.Append(solvedExpresson);
+                res.Append(solvedExpression);
                 res.Append("\" ");
             }
             res.Length--;
+            res = res.Replace("\"\"", "\"");
             return res.ToString();
         }
 

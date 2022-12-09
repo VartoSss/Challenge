@@ -32,24 +32,33 @@ public class Cypher
                 result.Append(splittedTask[1][i]);
             return result.ToString();
         }
-        else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 14) == "Caesar's code=")
+        else if (splittedTask[0].Substring(0, 14) == "Caesar's code=")
         {
-            //поменяй тут пж чтобы принимало с сайта
             var str = splittedTask[1];
             var shift = int.Parse(splittedTask[0].Substring(14));
-
             var result = new StringBuilder();
-
-            for (var i = 0; i < str.Length; i++)
+            var alphabet = chars;
+            if (splittedTask.Length == 3)
             {
-                var index = (Array.IndexOf(chars, str[i]) - shift) % chars.Length;
-                if (index < 0)
-                    index = chars.Length + index;
-                var newSymbol = chars[index];
-                result.Append(newSymbol.ToString());
+                alphabet = splittedTask[1].Substring(4).ToCharArray();
+                str = splittedTask[2];
             }
-            //и тут на return)
-            return result.ToString();
+            if (splittedTask.Length == 2 || splittedTask.Length == 3)
+            {
+                //поменяй тут пж чтобы принимало с сайта
+                for (var i = 0; i < str.Length; i++)
+                {
+                    var index = (Array.LastIndexOf(alphabet, str[i]) - shift) % alphabet.Length;
+                    if (index < 0)
+                        index = alphabet.Length + index;
+                    var newSymbol = alphabet[index];
+                    result.Append(newSymbol.ToString());
+                }
+
+                //и тут на return)
+                return result.ToString();
+            }
+            else throw new Exception("Unknown Caesar's code");
         }
         else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 15) == "Vigenere's code")
         {
