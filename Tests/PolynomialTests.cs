@@ -30,6 +30,6 @@ public class PolynomialTests
         }
         var doubleAnswer = double.Parse(answer.Replace('.', ','));
         var polynomResult = PolynomialRoot.CalculatePolynom(doubleAnswer, PolynomialRoot.GetDoubleMultipliers(task));
-        Assert.Less(polynomResult, 1e-8);
+        Assert.Less(polynomResult, 1e-4);
     }
 }
