@@ -55,6 +55,8 @@ public class Solver
             return Japanese.SolveJapanese(question);
         else if (taskResponse.TypeId == "newton-json")
             return json.SolveCommonJSON(question);
+        else if (taskResponse.TypeId == "japanese-steganography")
+            return JapanStegan.JapanSteganSolver(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
