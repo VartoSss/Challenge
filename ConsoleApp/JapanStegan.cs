@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,77 +26,69 @@ public class JapanStegan
 
         var japaneseResult = Japanese.SolveJapanese(japaneseTask);
         var japaneseRows = japaneseResult.Split(';');
-        var answerInRows = new StringBuilder();
-        var answerInColumns = new StringBuilder();
 
-        for (var i = 0; i < japaneseRows[0].Length; i++)
+        var japaneseMatrix = new List<string>();
+
+        foreach (var row in japaneseRows)
+        {
+            var currentRow = new StringBuilder();
+            foreach (var symbol in row)
+                currentRow.Append(Symbols[symbol]);
+            japaneseMatrix.Add(currentRow.ToString());
+        }
+
+        var matrixRows = new List<int>();
+        var matrixRowsReversed = new List<int>();
+
+        var matrixColumns = new List<int>();
+        var matrixColumnsReversed = new List<int>();
+
+        for (var i = 0; i < japaneseMatrix.Count; i++)
+        {
+            matrixRows.Add(BinaryToDecimal(japaneseMatrix[i]) - 1);
+            matrixRowsReversed.Add(BinaryToDecimalReversed(japaneseMatrix[i]) - 1);
+        }
+
+        for (var i = 0; i < japaneseMatrix[0].Length; i++)
         {
             var currentColumn = new StringBuilder();
-            foreach (var row in japaneseRows)
-                currentColumn.Append(Symbols[row[i]]);
-
-            answerInColumns.Append(currentColumn);
+            foreach (var row in japaneseMatrix)
+                currentColumn.Append(row[i]);
+            matrixColumns.Add(BinaryToDecimal(currentColumn.ToString()) - 1);
+            matrixColumnsReversed.Add(BinaryToDecimalReversed(currentColumn.ToString()) - 1);
         }
 
-        foreach (var symbol in japaneseResult)
-            if (Symbols.ContainsKey(symbol))
-                answerInRows.Append(Symbols[symbol]);
-
-        //по столбцам
-
-        /*
-        var binaryColumns = answerInColumns.ToString();
-        var reversedBinary = new StringBuilder();
-        for (var i = binaryColumns.Length - 1; i >= 0; i--)
-            reversedBinary.Append(binaryColumns[i]);
-
-        var binaryList = new List<string>();
-        var reversedString = reversedBinary.ToString();
-
-        while (!string.IsNullOrEmpty(binaryColumns))
+        var possibleIndexArrays = new[]
         {
-            var currentBinary = binaryColumns.Substring(0, Math.Min(8, binaryColumns.Length));
-            binaryList.Add(currentBinary);
-            binaryColumns = binaryColumns.Substring(8);
-        }
+            matrixColumns.ToArray(),
+            matrixColumnsReversed.ToArray(),
+            matrixRows.ToArray(),
+            matrixRowsReversed.ToArray()
+        };
 
-        var indexes = new List<int>();
-        foreach (var binaryNumber in binaryList)
-            indexes.Add(BinaryToDecimal(binaryNumber));
+        var rightArray = new int[0];
+
+        foreach (var possibleArray in possibleIndexArrays)
+        {
+            var isLowerThanLenght = true;
+            foreach (var index in possibleArray)
+            {
+                if (index < 0 || index >= taskText.Length)
+                {
+                    isLowerThanLenght = false;
+                    break;
+                }
+            }
+
+            if (isLowerThanLenght)
+                rightArray = possibleArray;
+        }
 
         var resultString = new StringBuilder();
-        foreach (var index in indexes)
-            resultString.Append(taskText[index % taskText.Length]);
-        */
 
-        //по строкам
+        foreach (var index in rightArray)
+            resultString.Append(taskText[index]);
 
-        
-        var binaryString = answerInRows.ToString();
-        var reversedBinary = new StringBuilder();
-        for (var i = binaryString.Length - 1; i >= 0; i--)
-            reversedBinary.Append(binaryString[i]);
-
-        var reversedString = reversedBinary.ToString();
-        var binaryList = new List<string>();
-
-        while (!string.IsNullOrEmpty(binaryString))
-        {
-            var currentBinary = binaryString.Substring(0, Math.Min(8, binaryString.Length));
-            binaryList.Add(currentBinary);
-            binaryString = binaryString.Substring(8);
-        }
-
-        var indexes = new List<int>();
-        foreach (var binaryNumber in binaryList)
-            indexes.Add(BinaryToDecimal(binaryNumber));
-
-        var resultString = new StringBuilder();
-        foreach (var index in indexes)
-            resultString.Append(taskText[index % taskText.Length]);
-        
-
-        
         return resultString.ToString();
     }
 
@@ -104,17 +97,6 @@ public class JapanStegan
         var result = 0.0;
         var power = 0;
 
-        /*
-        for (var i = 0; i < binaryNumber.Length - 1; i++)
-        {
-            var digit = binaryNumber[i].ToString();
-            result += int.Parse(digit) * Math.Pow(2, power);
-            power++;
-        }
-        */
-
-        //просто перевод из 2-чной в 10-чную
-
         for (var i = binaryNumber.Length - 1; i >= 0; i--)
         {
             var digit = binaryNumber[i].ToString();
@@ -122,7 +104,20 @@ public class JapanStegan
             power++;
         }
         
+        return (int)result;
+    }
 
+    public static int BinaryToDecimalReversed(string binaryNumber)
+    {
+        var result = 0.0;
+        var power = 0;
+
+        for (var i = 0; i < binaryNumber.Length; i++)
+        {
+            var digit = binaryNumber[i].ToString();
+            result += int.Parse(digit) * Math.Pow(2, power);
+            power++;
+        }
 
         return (int)result;
     }
