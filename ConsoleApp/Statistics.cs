@@ -19,7 +19,7 @@ namespace ConsoleApp
             var data = str.Split('|');
             var minimum = int.MaxValue;
             var maximum = int.MinValue;
-            if (question.Contains("increment") || question.Contains("decrement"))
+            if (str.Contains("increment") || str.Contains("decrement"))
             {
                 if (data[1] == "")
                     return "0";
