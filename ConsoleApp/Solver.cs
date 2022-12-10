@@ -29,7 +29,7 @@ public class Solver
         var question = taskResponse.Question;
         if (taskResponse.TypeId == "starter")
             return Starter.SolveStarter(question);
-        else if (taskResponse.TypeId == "cypher")
+        else if (taskResponse.TypeId == "cypher" || taskResponse.TypeId == "taare-zameen-par-cypher")
             return Cypher.SolveCypher(question);
         else if (taskResponse.TypeId == "determinant")
             return Determinant.DeterminantSolver(question);

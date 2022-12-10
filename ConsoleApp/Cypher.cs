@@ -32,6 +32,50 @@ public class Cypher
                 result.Append(splittedTask[1][i]);
             return result.ToString();
         }
+        else if (splittedTask[0] == "dyslexia")
+        {
+            
+            var directory = Directory.GetCurrentDirectory();
+            var debug = Directory.GetParent(directory).ToString();
+            var bin = Directory.GetParent(debug).ToString();
+            var project = Directory.GetParent(bin).ToString();
+            var h1_1 = Directory.GetParent(project);
+            
+            var allText = File.ReadAllText(h1_1 + @"\ConsoleApp\HarryPotterText.txt").ToLower();
+
+            var text = allText.Split();
+            var mixedWords = splittedTask[1].Split();
+            var ok = false;
+            for (var i = 0; i < text.Length; i++)
+            {
+                for (var j = 0; j < mixedWords.Length; j++)
+                {
+                    if (HaveTheSameAmountOfChars(text[i + j], mixedWords[j]))
+                    {
+                        ok = true;
+                    }
+                    else
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+
+                if (ok)
+                {
+                    var result = new string[mixedWords.Length];
+                    
+                    for (var j = 0; j < mixedWords.Length; j++)
+                    {
+                        result[j] = text[i + j];
+                    }
+
+                    return String.Join(" ", result);
+                }
+            }
+
+            return "";
+        }
         else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 14) == "Caesar's code=")
         {
             //поменяй тут пж чтобы принимало с сайта
@@ -167,9 +211,23 @@ public class Cypher
 
             return null;
         }
+        
         else
             throw new Exception("AAAAAA TASK GOT HARDER");
     }
+
+    private static bool HaveTheSameAmountOfChars(string s, string mixedWord)
+    {
+        if (s.Length != mixedWord.Length) return false;
+        foreach (var ch in s)
+        {
+            if (s.Count(f => f == ch) != mixedWord.Count(f => f == ch))
+                return false;
+        }
+
+        return true;
+    }
+
 
     private static bool StringsAreSame(string s1, string s2)
     {
@@ -187,21 +245,4 @@ public class Cypher
 
         return true;
     }
-
-    /*
-    private static object BuildVigenerSquare()
-    {
-        var vigenerSquare = new char[chars.Length, chars.Length];
-        for (var line = 0; line < chars.Length; line++)
-        {
-            for (var i = 0; i < chars.Length; i++)
-            {
-                for (var j = 0; j < chars.Length; j++)
-                {
-                    vigenerSquare[line, line] = 0;
-                }
-            }
-        }
-    }
-    */
 }
