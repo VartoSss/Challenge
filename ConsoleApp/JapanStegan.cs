@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,26 +31,32 @@ public class JapanStegan
         for (var i = 0; i < japaneseRows[0].Length; i++)
         {
             var currentColumn = new StringBuilder();
+            foreach (var row in japaneseRows)
+                currentColumn.Append(Symbols[row[i]]);
 
+            answerInColumns.Append(currentColumn);
         }
 
         foreach (var symbol in japaneseResult)
             if (Symbols.ContainsKey(symbol))
                 answerInRows.Append(Symbols[symbol]);
 
-        var binaryString = answerInRows.ToString();
+        //по столбцам
+
+        /*
+        var binaryColumns = answerInColumns.ToString();
         var reversedBinary = new StringBuilder();
-        for (var i = binaryString.Length - 1; i >= 0; i--)
-            reversedBinary.Append(binaryString[i]);
+        for (var i = binaryColumns.Length - 1; i >= 0; i--)
+            reversedBinary.Append(binaryColumns[i]);
 
-        var reversedString = reversedBinary.ToString();
         var binaryList = new List<string>();
+        var reversedString = reversedBinary.ToString();
 
-        while (!string.IsNullOrEmpty(reversedString))
+        while (!string.IsNullOrEmpty(binaryColumns))
         {
-            var currentBinary = reversedString.Substring(0, Math.Min(8, reversedString.Length));
+            var currentBinary = binaryColumns.Substring(0, Math.Min(8, binaryColumns.Length));
             binaryList.Add(currentBinary);
-            reversedString = reversedString.Substring(8);
+            binaryColumns = binaryColumns.Substring(8);
         }
 
         var indexes = new List<int>();
@@ -59,7 +66,36 @@ public class JapanStegan
         var resultString = new StringBuilder();
         foreach (var index in indexes)
             resultString.Append(taskText[index % taskText.Length]);
+        */
 
+        //по строкам
+
+        
+        var binaryString = answerInRows.ToString();
+        var reversedBinary = new StringBuilder();
+        for (var i = binaryString.Length - 1; i >= 0; i--)
+            reversedBinary.Append(binaryString[i]);
+
+        var reversedString = reversedBinary.ToString();
+        var binaryList = new List<string>();
+
+        while (!string.IsNullOrEmpty(binaryString))
+        {
+            var currentBinary = binaryString.Substring(0, Math.Min(8, binaryString.Length));
+            binaryList.Add(currentBinary);
+            binaryString = binaryString.Substring(8);
+        }
+
+        var indexes = new List<int>();
+        foreach (var binaryNumber in binaryList)
+            indexes.Add(BinaryToDecimal(binaryNumber));
+
+        var resultString = new StringBuilder();
+        foreach (var index in indexes)
+            resultString.Append(taskText[index % taskText.Length]);
+        
+
+        
         return resultString.ToString();
     }
 
@@ -68,12 +104,25 @@ public class JapanStegan
         var result = 0.0;
         var power = 0;
 
+        /*
+        for (var i = 0; i < binaryNumber.Length - 1; i++)
+        {
+            var digit = binaryNumber[i].ToString();
+            result += int.Parse(digit) * Math.Pow(2, power);
+            power++;
+        }
+        */
+
+        //просто перевод из 2-чной в 10-чную
+
         for (var i = binaryNumber.Length - 1; i >= 0; i--)
         {
             var digit = binaryNumber[i].ToString();
             result += int.Parse(digit) * Math.Pow(2, power);
             power++;
         }
+        
+
 
         return (int)result;
     }
