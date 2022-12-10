@@ -25,7 +25,30 @@ namespace ConsoleApp
                     if (CheckCypher(splittedTask[i]))
                     {
                         var splittedCypher = splittedTask[i].Split("|");
-                        mathSentence = StringNumber.StringNumberSolver(Cypher.SolveCypher(splittedCypher[1]));
+                        mathSentence = Cypher.SolveCypher(splittedCypher[1]);
+                        try
+                        {
+                            mathSentence = MathSolver.Solve(mathSentence);
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                mathSentence = Determinant.DeterminantSolver(mathSentence);
+                            }
+                            catch
+                            {
+                                try
+                                {
+                                    mathSentence = StringNumber.StringNumberSolver(mathSentence);
+                                }
+                                catch
+                                {
+                                    throw new Exception("Пиздец...");
+                                }
+                            }
+                        }
+
                     }
                     else if (CheckMath(splittedTask[i]))
                     {

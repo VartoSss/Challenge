@@ -60,16 +60,22 @@ public class Cypher
             }
             else throw new Exception("Unknown Caesar's code");
         }
-        else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 15) == "Vigenere's code")
+        else if (splittedTask[0].Substring(0, 15) == "Vigenere's code")
         {
-            //var vigenerSquare = BuildVigenerSquare();
+
+            var alphabet = chars;
             var str = splittedTask[1];
+            if (splittedTask.Length == 3)
+            {
+                alphabet = splittedTask[1].Substring(4).ToCharArray();
+                str = splittedTask[2];
+            }
             var keyWord = splittedTask[0].Substring(16);
             var answer = new StringBuilder();
             for (var i = 0; i < str.Length; i++)
             {
-                var step = Array.IndexOf(chars, keyWord[i % keyWord.Length]);
-                answer.Append(chars[(Array.IndexOf(chars, str[i]) - step + chars.Length) % chars.Length]);
+                var step = Array.IndexOf(alphabet, keyWord[i % keyWord.Length]);
+                answer.Append(alphabet[(Array.IndexOf(alphabet, str[i]) - step + alphabet.Length) % alphabet.Length]);
             }
 
             return answer.ToString();
