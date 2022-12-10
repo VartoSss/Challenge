@@ -73,10 +73,9 @@ namespace ConsoleApp
             var lolo = CalculatePolynom(29.40753872320056, multipliers);
             var root = 0.0;
             var found = 0;
-            var eps = 1.0e-5;
-            for (double a = -100; a < 100; a += 0.5)
+            for (double a = -100; a < 100; a += 0.1)
             {
-                var b = a + 0.5;
+                var b = a + 0.1;
                 var fa = CalculatePolynom(a, multipliers);
                 var fb = CalculatePolynom(b, multipliers);
                 if (fa * fb > 0)
@@ -85,7 +84,7 @@ namespace ConsoleApp
                 {
                     var c = a + (b - a) * 0.5;
                     var fc = CalculatePolynom(c, multipliers);
-                    if (Math.Abs(fc) < eps)
+                    if (Math.Abs(fc) < 1e-3)
                     {
                         root = c;
                         found = 1;
