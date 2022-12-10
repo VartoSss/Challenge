@@ -41,7 +41,7 @@ public class Solver
             return Steganography.SolveSteganography(question);
         else if (taskResponse.TypeId == "polynomial-root")
             return PolynomialRoot.SolvePolynom(question);
-        else if (taskResponse.TypeId == "statistics")
+        else if (taskResponse.TypeId == "statistics-composition")
             return Statistics.SolveStatistics(question);
         else if (taskResponse.TypeId == "shape")
             return NewShape.NewShapeSolver(question);
