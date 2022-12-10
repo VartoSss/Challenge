@@ -78,33 +78,48 @@ public class Cypher
         }
         else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 14) == "Caesar's code=")
         {
-            //поменяй тут пж чтобы принимало с сайта
             var str = splittedTask[1];
             var shift = int.Parse(splittedTask[0].Substring(14));
-
             var result = new StringBuilder();
-
-            for (var i = 0; i < str.Length; i++)
+            var alphabet = chars;
+            if (splittedTask.Length == 3)
             {
-                var index = (Array.IndexOf(chars, str[i]) - shift) % chars.Length;
-                if (index < 0)
-                    index = chars.Length + index;
-                var newSymbol = chars[index];
-                result.Append(newSymbol.ToString());
+                alphabet = splittedTask[1].Substring(4).ToCharArray();
+                str = splittedTask[2];
             }
-            //и тут на return)
-            return result.ToString();
+            if (splittedTask.Length == 2 || splittedTask.Length == 3)
+            {
+                //поменяй тут пж чтобы принимало с сайта
+                for (var i = 0; i < str.Length; i++)
+                {
+                    var index = (Array.LastIndexOf(alphabet, str[i]) - shift) % alphabet.Length;
+                    if (index < 0)
+                        index = alphabet.Length + index;
+                    var newSymbol = alphabet[index];
+                    result.Append(newSymbol.ToString());
+                }
+
+                //и тут на return)
+                return result.ToString();
+            }
+            else throw new Exception("Unknown Caesar's code");
         }
-        else if (splittedTask.Length == 2 && splittedTask[0].Substring(0, 15) == "Vigenere's code")
+        else if (splittedTask[0].Substring(0, 15) == "Vigenere's code")
         {
-            //var vigenerSquare = BuildVigenerSquare();
+
+            var alphabet = chars;
             var str = splittedTask[1];
+            if (splittedTask.Length == 3)
+            {
+                alphabet = splittedTask[1].Substring(4).ToCharArray();
+                str = splittedTask[2];
+            }
             var keyWord = splittedTask[0].Substring(16);
             var answer = new StringBuilder();
             for (var i = 0; i < str.Length; i++)
             {
-                var step = Array.IndexOf(chars, keyWord[i % keyWord.Length]);
-                answer.Append(chars[(Array.IndexOf(chars, str[i]) - step + chars.Length) % chars.Length]);
+                var step = Array.IndexOf(alphabet, keyWord[i % keyWord.Length]);
+                answer.Append(alphabet[(Array.IndexOf(alphabet, str[i]) - step + alphabet.Length) % alphabet.Length]);
             }
 
             return answer.ToString();
@@ -148,22 +163,22 @@ public class Cypher
         }
         else if (splittedTask[0].Substring(0, 35) == "a first longest word of the message")
         {
-            var alphabet = new char []
+            var alphabet = new char[]
             {
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
                 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3',
                 '4', '5', '6', '7', '8', '9', ' ', '\''
-            }; 
+            };
             var word = splittedTask[0].Split('=')[1];
             var str = splittedTask[1];
-            
+
             var directory = Directory.GetCurrentDirectory();
             var debug = Directory.GetParent(directory).ToString();
             var bin = Directory.GetParent(debug).ToString();
             var project = Directory.GetParent(bin).ToString();
             var h1_1 = Directory.GetParent(project);
-            
+
             var allText = File.ReadAllText(h1_1 + @"\ConsoleApp\HarryPotterText.txt").ToLower();
 
             var text = allText.Split();
@@ -194,7 +209,7 @@ public class Cypher
                         }
                         else if (q == alphabet[i])
                             decodedString.Append(' ');
-                        else 
+                        else
                             decodedString.Append('?');
                     }
 

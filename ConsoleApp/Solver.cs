@@ -35,13 +35,13 @@ public class Solver
             return Determinant.DeterminantSolver(question);
         else if (taskResponse.TypeId == "moment")
             return Moment.SolveMoment(question);
-        else if (taskResponse.TypeId == "math")
-            return MathSolver.Solve(question);
+        else if (taskResponse.TypeId == "random-math")
+            return RandomMathSolver.SolveRandomMath(question);
         else if (taskResponse.TypeId == "steganography")
             return Steganography.SolveSteganography(question);
         else if (taskResponse.TypeId == "polynomial-root")
             return PolynomialRoot.SolvePolynom(question);
-        else if (taskResponse.TypeId == "statistics")
+        else if (taskResponse.TypeId == "statistics-composition")
             return Statistics.SolveStatistics(question);
         else if (taskResponse.TypeId == "noisy-shape")
             return NewShape.NewShapeSolver(question);
@@ -53,6 +53,8 @@ public class Solver
             return StringNumber.StringNumberSolver(question);
         else if (taskResponse.TypeId == "japanese")
             return Japanese.SolveJapanese(question);
+        else if (taskResponse.TypeId == "newton-json")
+            return json.SolveCommonJSON(question);
         else
             throw new Exception("I don't know how to solve this task type yet");
     }
