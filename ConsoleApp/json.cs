@@ -44,7 +44,7 @@ namespace ConsoleApp
                                 }
                                 catch
                                 {
-                                    throw new Exception("Пиздец...");
+                                    throw new Exception("Пи**ец...");
                                 }
                             }
                         }

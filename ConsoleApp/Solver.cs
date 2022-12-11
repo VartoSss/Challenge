@@ -35,17 +35,19 @@ public class Solver
             return Determinant.DeterminantSolver(question);
         else if (taskResponse.TypeId == "moment")
             return Moment.SolveMoment(question);
+        else if (taskResponse.TypeId == "math")
+            return MathSolver.Solve(question);
         else if (taskResponse.TypeId == "random-math")
             return RandomMathSolver.SolveRandomMath(question);
         else if (taskResponse.TypeId == "steganography")
             return Steganography.SolveSteganography(question);
         else if (taskResponse.TypeId == "polynomial-root")
             return PolynomialRoot.SolvePolynom(question);
-        else if (taskResponse.TypeId == "statistics-composition")
+        else if (taskResponse.TypeId == "statistics-composition" || taskResponse.TypeId == "statistics")
             return Statistics.SolveStatistics(question);
-        else if (taskResponse.TypeId == "noisy-shape")
+        else if (taskResponse.TypeId == "noisy-shape" || taskResponse.TypeId == "shape")
             return NewShape.NewShapeSolver(question);
-        else if (taskResponse.TypeId == "json")
+        else if (taskResponse.TypeId == "json" || taskResponse.TypeId == "newton-json")
             return json.SolveCommonJSON(question);
         else if (taskResponse.TypeId == "inverse-matrix")
             return InverseMatrix.CalculateInverseMatrix(question);
@@ -53,8 +55,6 @@ public class Solver
             return StringNumber.StringNumberSolver(question);
         else if (taskResponse.TypeId == "japanese")
             return Japanese.SolveJapanese(question);
-        else if (taskResponse.TypeId == "newton-json")
-            return json.SolveCommonJSON(question);
         else if (taskResponse.TypeId == "japanese-steganography")
             return JapanStegan.JapanSteganSolver(question);
         else
