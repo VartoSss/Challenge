@@ -74,7 +74,7 @@ namespace ConsoleApp
             var root = 0.0;
             var found = 0;
             var eps = 1.0e-12;
-            for (double a = -10000; a < 10000; a+=0.5)
+            for (double a = -1000; a < 1000; a+=0.1)
             {
                 var b = a + 0.1;
                 var fa = CalculatePolynom(a, multipliers);
